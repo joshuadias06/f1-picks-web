@@ -7,6 +7,7 @@ import Circuits from "./pages/Circuits/Circuits";
 import Drivers from "./pages/Drivers/Drivers";
 import Teams from "./pages/Teams/Teams";
 import Calendar from "./pages/Calendar/Calendar";
+import DriverDetails from "./pages/DriversDetails/DriverDetails";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/drivers" element={<Drivers />} />
           <Route path="/teams" element={<Teams />} />
           <Route path="/calendar" element={<Calendar />} />
+          <Route path="/driver/:id" element={<DriverDetails />} />
 
         </Routes>
       </div>
