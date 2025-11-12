@@ -3,6 +3,7 @@ import Home from "./pages/Home/Home";
 import "./index.css";
 import Picks from "./pages/Picks/Picks";
 import Leaderboard from "./pages/Leaderboard/Leaderboard";
+import Circuits from "./pages/Circuits/Circuits";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/picks" element={<Picks />} />
           <Route path="/leaderboard" element={<Leaderboard />} />
+          <Route path="/circuits" element={<Circuits />} />
         </Routes>
       </div>
     </BrowserRouter>
