@@ -9,6 +9,7 @@ import Teams from "./pages/Teams/Teams";
 import Calendar from "./pages/Calendar/Calendar";
 import DriverDetails from "./pages/DriversDetails/DriverDetails";
 import RaceDetails from "./pages/RaceDetails/RaceDetails";
+import ConstructorDetails from "./pages/ConstructorDetails/ConstructorDetails";
 
 function App() {
   return (
@@ -24,7 +25,7 @@ function App() {
           <Route path="/calendar" element={<Calendar />} />
           <Route path="/driver/:id" element={<DriverDetails />} />
           <Route path="/race/:id" element={<RaceDetails />} />
-
+          <Route path="/team/:id" element={<ConstructorDetails />} />
 
         </Routes>
       </div>
