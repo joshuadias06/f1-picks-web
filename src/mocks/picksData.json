@@ -1,46 +1,81 @@
 {
     "race": {
-      "title": "YOUR PICKS",
-      "grandPrix": "Monaco Grand Prix"
+        "title": "YOUR PICKS",
+        "grandPrix": "Monaco Grand Prix"
     },
-  
-    "placeholders": ["P1", "P2", "P3"],
-  
+    "placeholders": [
+        "P1",
+        "P2",
+        "P3"
+    ],
     "qualifyingDrivers": [
-      {
-        "name": "Max Verstappen",
-        "odd": "1.50",
-        "avatar": "/avatars/verstappen.png"
-      },
-      {
-        "name": "Charles Leclerc",
-        "odd": "3.00",
-        "avatar": "/avatars/leclerc.png"
-      },
-      {
-        "name": "Lando Norris",
-        "odd": "5.50",
-        "avatar": "/avatars/norris.png"
-      }
+        {
+            "name": "Max Verstappen",
+            "odd": "1.50",
+            "avatar": "/avatars/verstappen.png"
+        },
+        {
+            "name": "Charles Leclerc",
+            "odd": "3.00",
+            "avatar": "/avatars/leclerc.png"
+        },
+        {
+            "name": "Lando Norris",
+            "odd": "5.50",
+            "avatar": "/avatars/norris.png"
+        }
     ],
-  
     "raceDrivers": [
-      {
-        "name": "Max Verstappen",
-        "odd": "1.60",
-        "avatar": "/avatars/verstappen.png"
-      },
-      {
-        "name": "Carlos Sainz",
-        "odd": "4.10",
-        "avatar": "/avatars/sainz.png"
-      }
+        {
+            "name": "Max Verstappen",
+            "odd": "1.60",
+            "avatar": "/avatars/verstappen.png"
+        },
+        {
+            "name": "Carlos Sainz",
+            "odd": "4.10",
+            "avatar": "/avatars/sainz.png"
+        }
     ],
-  
     "constructors": [
-      { "name": "Red Bull Racing", "logo": "/teams/redbull.png" },
-      { "name": "Ferrari", "logo": "/teams/ferrari.png" },
-      { "name": "McLaren", "logo": "/teams/mclaren.png" }
+        {
+            "name": "Red Bull Racing",
+            "logo": "/teams/redbull.png"
+        },
+        {
+            "name": "Ferrari",
+            "logo": "/teams/ferrari.png"
+        },
+        {
+            "name": "McLaren",
+            "logo": "/teams/mclaren.png"
+        }
+    ],
+    "drivers": [
+        {
+            "name": "Max Verstappen",
+            "odd": "1.50",
+            "avatar": "/avatars/verstappen.png"
+        },
+        {
+            "name": "Charles Leclerc",
+            "odd": "3.00",
+            "avatar": "/avatars/leclerc.png"
+        },
+        {
+            "name": "Lando Norris",
+            "odd": "5.50",
+            "avatar": "/avatars/norris.png"
+        },
+        {
+            "name": "Carlos Sainz",
+            "odd": "7.00",
+            "avatar": "/avatars/sainz.png"
+        },
+        {
+            "name": "Lewis Hamilton",
+            "odd": "8.50",
+            "avatar": "/avatars/hamilton.png"
+        }
     ]
-  }
-  
+}
