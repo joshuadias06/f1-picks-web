@@ -1,0 +1,39 @@
+{
+    "user": {
+      "name": "Joshua",
+      "points": 1240,
+      "avatar": "/avatars/joshua.png"
+    },
+    "upcomingRace": {
+      "title": "MONACO GRAND PRIX",
+      "date": "26 MAY 2024",
+      "flag": "/flags/monaco.png",
+      "countdown": {
+        "days": "08",
+        "hours": "14",
+        "minutes": "22",
+        "seconds": "45"
+      }
+    },
+    "podium": [
+      {
+        "pos": 1,
+        "name": "Sarah",
+        "points": "1,450",
+        "avatar": "/avatars/sarah.png"
+      },
+      {
+        "pos": 2,
+        "name": "Mike",
+        "points": "1,380",
+        "avatar": "/avatars/mike.png"
+      },
+      {
+        "pos": 3,
+        "name": "Alex (You)",
+        "points": "1,240",
+        "avatar": "/avatars/alex.png"
+      }
+    ]
+  }
+  
