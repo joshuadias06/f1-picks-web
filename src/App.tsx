@@ -5,6 +5,7 @@ import Picks from "./pages/Picks/Picks";
 import Leaderboard from "./pages/Leaderboard/Leaderboard";
 import Circuits from "./pages/Circuits/Circuits";
 import Drivers from "./pages/Drivers/Drivers";
+import Teams from "./pages/Teams/Teams";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/leaderboard" element={<Leaderboard />} />
           <Route path="/circuits" element={<Circuits />} />
           <Route path="/drivers" element={<Drivers />} />
+          <Route path="/teams" element={<Teams />} />
         </Routes>
       </div>
     </BrowserRouter>
