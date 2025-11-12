@@ -10,6 +10,7 @@ import Calendar from "./pages/Calendar/Calendar";
 import DriverDetails from "./pages/DriversDetails/DriverDetails";
 import RaceDetails from "./pages/RaceDetails/RaceDetails";
 import ConstructorDetails from "./pages/ConstructorDetails/ConstructorDetails";
+import Profile from "./pages/Profile/Profile";
 
 function App() {
   return (
@@ -26,7 +27,7 @@ function App() {
           <Route path="/driver/:id" element={<DriverDetails />} />
           <Route path="/race/:id" element={<RaceDetails />} />
           <Route path="/team/:id" element={<ConstructorDetails />} />
-
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </div>
     </BrowserRouter>
