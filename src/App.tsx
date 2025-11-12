@@ -1,6 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home/Home";
-import "./index.css"; // contém Tailwind + fontes F1
+import "./index.css";
+import Picks from "./pages/Picks/Picks";
+import Leaderboard from "./pages/Leaderboard/Leaderboard";
 
 function App() {
   return (
@@ -8,6 +10,8 @@ function App() {
       <div className="min-h-screen bg-dark text-ice">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/picks" element={<Picks />} />
+          <Route path="/leaderboard" element={<Leaderboard />} />
         </Routes>
       </div>
     </BrowserRouter>
