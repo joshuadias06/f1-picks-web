@@ -4,6 +4,7 @@ import SectionQualifying from "./components/SectionQualifying";
 import SectionGrandPrix from "./components/SectionGrandPrix";
 import SectionConstructor from "./components/SectionConstructor";
 import DriverModal from "./components/DriverModal";
+import BottomNav from "@/components/BottomNav/BottomNav";
 
 import type {
   Driver,
@@ -151,6 +152,7 @@ export default function Picks() {
       <button className="fixed bottom-4 left-4 right-4 py-4 rounded-xl bg-primary text-ice font-f1-bold text-lg">
         CONFIRM PICKS
       </button>
+      <BottomNav />
     </div>
   );
 }

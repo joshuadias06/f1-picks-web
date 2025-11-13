@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Bell, ChevronRight } from "lucide-react";
 import homeData from "@/mocks/homeData.json";
+import BottomNav from "@/components/BottomNav/BottomNav";
 
 export default function Home() {
   const { user, upcomingRace, podium } = homeData;
@@ -119,6 +120,7 @@ export default function Home() {
           ))}
         </div>
       </section>
+      <BottomNav />
     </div>
   );
 }

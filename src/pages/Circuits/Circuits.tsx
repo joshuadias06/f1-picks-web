@@ -1,5 +1,6 @@
 import { ArrowLeft, LayoutGrid, Home, CalendarDays, Map, Trophy, Settings } from "lucide-react";
 import { motion } from "framer-motion";
+import BottomNav from "@/components/BottomNav/BottomNav";
 
 export default function Circuits() {
   const circuits = [
@@ -82,6 +83,7 @@ export default function Circuits() {
           <span className="text-xs font-f1-regular mt-1">Standings</span>
         </button>
       </nav>
+      <BottomNav />
     </div>
   );
 }

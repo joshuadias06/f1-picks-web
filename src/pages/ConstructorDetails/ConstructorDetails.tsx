@@ -2,6 +2,7 @@ import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
+import BottomNav from "@/components/BottomNav/BottomNav";
 import {
   ResponsiveContainer,
   LineChart,
@@ -217,6 +218,7 @@ export default function ConstructorDetails() {
       >
         MAKE PICKS
       </motion.button>
+      <BottomNav />
     </div>
   );
 }

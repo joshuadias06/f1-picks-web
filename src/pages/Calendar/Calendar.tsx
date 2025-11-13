@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sliders } from "lucide-react";
+import BottomNav from "@/components/BottomNav/BottomNav";
 
 type Race = {
   id: string;
   round: number;
   title: string;
   circuit: string;
-  quali: string; // display times
+  quali: string;
   race: string;
   status: "upcoming" | "completed" | "live";
 };
@@ -46,11 +47,16 @@ export default function Calendar() {
   const [tab, setTab] = useState<"all" | "upcoming" | "completed">("upcoming");
 
   const filtered = SAMPLE_RACES.filter((r) =>
-    tab === "all" ? true : tab === "upcoming" ? r.status === "upcoming" || r.status === "live" : r.status === "completed"
+    tab === "all"
+      ? true
+      : tab === "upcoming"
+      ? r.status === "upcoming" || r.status === "live"
+      : r.status === "completed"
   );
 
   return (
-    <div className="min-h-screen bg-dark text-ice font-f1-regular flex flex-col p-4 pb-28">
+    <div className="min-h-screen bg-dark text-ice font-f1-regular flex flex-col p-4 pb-28 relative">
+
       {/* Header */}
       <header className="flex items-center justify-between mb-4">
         <h1 className="font-f1-bold text-xl tracking-wide">Race Calendar</h1>
@@ -110,7 +116,11 @@ export default function Calendar() {
                       : "bg-gray-700 text-gray-300"
                   }`}
                 >
-                  {race.status === "upcoming" ? "UPCOMING" : race.status === "live" ? "LIVE" : "COMPLETED"}
+                  {race.status === "upcoming"
+                    ? "UPCOMING"
+                    : race.status === "live"
+                    ? "LIVE"
+                    : "COMPLETED"}
                 </span>
               </div>
 
@@ -122,7 +132,7 @@ export default function Calendar() {
 
                 <div className="flex items-center gap-3">
                   <span className="inline-block w-5 text-center">⏱️</span>
-                  <span className="text-gray-300">Quali: {race.quali} | Race: {race.race}</span>
+                  <span>Quali: {race.quali} | Race: {race.race}</span>
                 </div>
               </div>
 
@@ -141,6 +151,7 @@ export default function Calendar() {
           ))}
         </AnimatePresence>
       </div>
+      <BottomNav />
     </div>
   );
 }

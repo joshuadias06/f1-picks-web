@@ -17,7 +17,7 @@ function App() {
     <BrowserRouter>
       <div className="min-h-screen bg-dark text-ice">
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/picks" element={<Picks />} />
           <Route path="/leaderboard" element={<Leaderboard />} />
           <Route path="/circuits" element={<Circuits />} />

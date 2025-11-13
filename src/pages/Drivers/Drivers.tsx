@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Search } from "lucide-react";
+import BottomNav from "@/components/BottomNav/BottomNav";
 
 export default function Drivers() {
   const drivers = [
@@ -84,6 +85,7 @@ export default function Drivers() {
           </motion.div>
         ))}
       </motion.div>
+      <BottomNav />
     </div>
   );
 }

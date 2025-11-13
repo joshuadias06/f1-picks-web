@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import { LineChart, Line, XAxis, ResponsiveContainer } from "recharts";
+import BottomNav from "@/components/BottomNav/BottomNav";
 
 export default function DriverDetails() {
   const driver = {
@@ -125,6 +126,7 @@ export default function DriverDetails() {
           </div>
         </div>
       </div>
+      <BottomNav />
     </div>
   );
 }

@@ -1,0 +1,41 @@
+{
+    "leaderboard": [
+      {
+        "name": "Max Verstappen",
+        "shortName": "Max V.",
+        "points": 5150,
+        "img": "/avatars/max.png"
+      },
+      {
+        "name": "Charles Leclerc",
+        "shortName": "Charles L.",
+        "points": 4980,
+        "img": "/avatars/charles.png"
+      },
+      {
+        "name": "Lando Norris",
+        "shortName": "Lando N.",
+        "points": 4815,
+        "img": "/avatars/lando.png"
+      },
+      {
+        "name": "Sarah K.",
+        "points": 4790
+      },
+      {
+        "name": "You",
+        "shortName": "You",
+        "points": 4755,
+        "highlight": true
+      },
+      {
+        "name": "Alex B.",
+        "points": 4720
+      },
+      {
+        "name": "Jessica P.",
+        "points": 4680
+      }
+    ]
+  }
+  
