@@ -1,0 +1,27 @@
+export const countryToCode: Record<string, string> = {
+    "Australia": "au",
+    "China": "cn",
+    "Japan": "jp",
+    "Bahrain": "bh",
+    "Saudi Arabia": "sa",
+    "USA": "us",
+    "United States": "us",
+    "Italy": "it",
+    "Monaco": "mc",
+    "Spain": "es",
+    "Canada": "ca",
+    "Austria": "at",
+    "UK": "gb",
+    "United Kingdom": "gb",
+    "Belgium": "be",
+    "Hungary": "hu",
+    "Netherlands": "nl",
+    "Azerbaijan": "az",
+    "Singapore": "sg",
+    "Mexico": "mx",
+    "Brazil": "br",
+    "Qatar": "qa",
+    "UAE": "ae",
+    "United Arab Emirates": "ae"
+  };
+  
