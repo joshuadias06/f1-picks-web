@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 export default function RaceDetails() {
   const navigate = useNavigate();
-  const { id } = useParams();
+  const { id: _id } = useParams(); // ✔️ evita warning
 
   const race = {
     id: "monaco-grand-prix",

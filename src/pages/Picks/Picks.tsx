@@ -142,16 +142,19 @@ export default function Picks() {
           currentType === "QUALI"
             ? filterDriversForSlot(drivers, selectedQuali, currentSlot)
             : currentType === "GP"
-            ? filterDriversForSlot(drivers, selectedGP, currentSlot)
-            : drivers
+              ? filterDriversForSlot(drivers, selectedGP, currentSlot)
+              : drivers
         }
         constructors={constructors}
         onSelect={onSelect}
       />
 
-      <button className="fixed bottom-4 left-4 right-4 py-4 rounded-xl bg-primary text-ice font-f1-bold text-lg">
+      <button
+        className="fixed bottom-20 left-4 right-4 py-4 rounded-xl bg-primary text-ice font-f1-bold text-lg z-50"
+      >
         CONFIRM PICKS
       </button>
+
       <BottomNav />
     </div>
   );

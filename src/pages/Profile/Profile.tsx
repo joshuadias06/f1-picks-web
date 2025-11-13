@@ -2,6 +2,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, Settings } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import BottomNav from "@/components/BottomNav/BottomNav";
 
 export default function Profile() {
   const navigate = useNavigate();
@@ -179,6 +180,7 @@ export default function Profile() {
           </motion.div>
         )}
       </AnimatePresence>
+      <BottomNav />
     </div>
   );
 }
