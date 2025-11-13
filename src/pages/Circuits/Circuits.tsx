@@ -1,4 +1,4 @@
-import { ArrowLeft, LayoutGrid, Home, CalendarDays, Map, Trophy, Settings } from "lucide-react";
+import { ArrowLeft, LayoutGrid} from "lucide-react";
 import { motion } from "framer-motion";
 import BottomNav from "@/components/BottomNav/BottomNav";
 
@@ -59,30 +59,6 @@ export default function Circuits() {
           </motion.div>
         ))}
       </motion.div>
-
-      {/* Bottom Navigation */}
-      <nav className="fixed bottom-0 left-0 right-0 bg-metallic/70 backdrop-blur-md flex justify-around py-2 border-t border-gray-700">
-        <button className="flex flex-col items-center text-gray-400 hover:text-primary transition">
-          <Home size={20} />
-          <span className="text-xs font-f1-regular mt-1">Home</span>
-        </button>
-        <button className="flex flex-col items-center text-gray-400 hover:text-primary transition">
-          <CalendarDays size={20} />
-          <span className="text-xs font-f1-regular mt-1">Races</span>
-        </button>
-        <button className="flex flex-col items-center text-gray-400 hover:text-primary transition">
-          <Settings size={20} />
-          <span className="text-xs font-f1-regular mt-1">Picks</span>
-        </button>
-        <button className="flex flex-col items-center text-primary">
-          <Map size={20} />
-          <span className="text-xs font-f1-regular mt-1">Circuits</span>
-        </button>
-        <button className="flex flex-col items-center text-gray-400 hover:text-primary transition">
-          <Trophy size={20} />
-          <span className="text-xs font-f1-regular mt-1">Standings</span>
-        </button>
-      </nav>
       <BottomNav />
     </div>
   );

@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { ArrowLeft, Timer, Flag, Ruler, ChevronLeft, ChevronRight } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
+import BottomNav from "@/components/BottomNav/BottomNav";
 
 export default function RaceDetails() {
   const navigate = useNavigate();
@@ -85,6 +86,7 @@ export default function RaceDetails() {
       >
         MAKE PICKS
       </motion.button>
+      <BottomNav />
     </div>
   );
 }

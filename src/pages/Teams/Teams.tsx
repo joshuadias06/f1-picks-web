@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Menu, Search } from "lucide-react";
+import BottomNav from "@/components/BottomNav/BottomNav";
 
 export default function Teams() {
   const teams = [
@@ -91,6 +92,7 @@ export default function Teams() {
           </motion.div>
         ))}
       </motion.div>
+      <BottomNav />
     </div>
   );
 }
