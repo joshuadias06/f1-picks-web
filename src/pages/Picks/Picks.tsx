@@ -4,12 +4,15 @@ import SectionQualifying from "./components/SectionQualifying";
 import SectionGrandPrix from "./components/SectionGrandPrix";
 import SectionConstructor from "./components/SectionConstructor";
 import DriverModal from "./components/DriverModal";
+
 import type {
   Driver,
   Constructor,
   QualifyingSlots,
   GPSlots,
 } from "./types";
+
+import picksData from "@/mocks/picksData.json";
 
 export default function Picks() {
   const [drivers, setDrivers] = useState<Driver[]>([]);
@@ -27,9 +30,9 @@ export default function Picks() {
   });
 
   const [selectedGP, setSelectedGP] = useState<GPSlots>({
-    P1: null,
-    P2: null,
-    P3: null,
+    GP1: null,
+    GP2: null,
+    GP3: null,
   });
 
   const [selectedConstructor, setSelectedConstructor] = useState<string | null>(
@@ -40,15 +43,24 @@ export default function Picks() {
   const [showGP, setShowGP] = useState(false);
   const [showConstructor, setShowConstructor] = useState(false);
 
+  // Load mock data
   useEffect(() => {
-    fetch("http://localhost:8080/api/drivers")
-      .then((res) => res.json())
-      .then(setDrivers);
-
-    fetch("http://localhost:8080/api/constructors")
-      .then((res) => res.json())
-      .then(setConstructors);
+    setDrivers(picksData.drivers);
+    setConstructors(picksData.constructors);
   }, []);
+
+  // 🔥 BLOCK RULE: Prevent same driver in more than one slot
+  const filterDriversForSlot = (
+    list: Driver[],
+    selected: Record<string, string | null>,
+    slot: string | null
+  ) => {
+    const blocked = Object.entries(selected)
+      .filter(([s, val]) => s !== slot && val)
+      .map(([_, val]) => val);
+
+    return list.filter((d) => !blocked.includes(d.name));
+  };
 
   const openModal = (
     type: "QUALI" | "GP" | "CONSTRUCTOR",
@@ -65,14 +77,14 @@ export default function Picks() {
     if (currentType === "QUALI" && currentSlot) {
       setSelectedQuali((prev) => ({
         ...prev,
-        [currentSlot]: (item as Driver).name,
+        [currentSlot]: item.name,
       }));
     }
 
     if (currentType === "GP" && currentSlot) {
       setSelectedGP((prev) => ({
         ...prev,
-        [currentSlot]: (item as Driver).name,
+        [currentSlot]: item.name,
       }));
     }
 
@@ -89,13 +101,14 @@ export default function Picks() {
         <div className="flex items-center gap-2">
           <ArrowLeft className="text-ice w-6 h-6" />
           <div>
-            <h1 className="font-f1-bold text-lg">YOUR PICKS</h1>
-            <p className="text-sm text-gray-400">Monaco Grand Prix</p>
+            <h1 className="font-f1-bold text-lg">{picksData.race.title}</h1>
+            <p className="text-sm text-gray-400">{picksData.race.grandPrix}</p>
           </div>
         </div>
         <BarChart3 className="text-ice w-6 h-6" />
       </header>
 
+      {/* QUALIFYING */}
       <SectionQualifying
         open={showQuali}
         toggle={() => setShowQuali(!showQuali)}
@@ -103,6 +116,7 @@ export default function Picks() {
         onOpenModal={(slot) => openModal("QUALI", slot)}
       />
 
+      {/* GRAND PRIX */}
       <SectionGrandPrix
         open={showGP}
         toggle={() => setShowGP(!showGP)}
@@ -110,6 +124,7 @@ export default function Picks() {
         onOpenModal={(slot) => openModal("GP", slot)}
       />
 
+      {/* CONSTRUCTOR */}
       <SectionConstructor
         open={showConstructor}
         toggle={() => setShowConstructor(!showConstructor)}
@@ -117,11 +132,18 @@ export default function Picks() {
         onOpenModal={() => openModal("CONSTRUCTOR")}
       />
 
+      {/* MODAL */}
       <DriverModal
         open={modalOpen}
         onClose={() => setModalOpen(false)}
         type={currentType}
-        drivers={drivers}
+        drivers={
+          currentType === "QUALI"
+            ? filterDriversForSlot(drivers, selectedQuali, currentSlot)
+            : currentType === "GP"
+            ? filterDriversForSlot(drivers, selectedGP, currentSlot)
+            : drivers
+        }
         constructors={constructors}
         onSelect={onSelect}
       />

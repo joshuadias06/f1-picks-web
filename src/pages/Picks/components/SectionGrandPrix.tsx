@@ -30,7 +30,7 @@ export default function SectionGrandPrix({ open, toggle, selected, onOpenModal }
             </p>
 
             <div className="flex justify-between mb-4">
-              {(["P1", "P2", "P3"] as const).map((slot) => (
+              {(["GP1", "GP2", "GP3"] as const).map((slot) => (
                 <div
                   key={slot}
                   onClick={() => onOpenModal(slot)}

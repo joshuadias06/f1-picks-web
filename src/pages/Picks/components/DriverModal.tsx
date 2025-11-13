@@ -34,6 +34,7 @@ export default function DriverModal({
             animate={{ y: 0 }}
             exit={{ y: 300 }}
           >
+            {/* Header */}
             <div className="flex justify-between items-center mb-4">
               <h2 className="font-f1-bold text-lg">
                 {type === "CONSTRUCTOR" ? "Select Constructor" : "Select Driver"}
@@ -41,11 +42,12 @@ export default function DriverModal({
               <X className="text-ice w-6 h-6 cursor-pointer" onClick={onClose} />
             </div>
 
+            {/* List */}
             <div className="flex flex-col gap-3">
               {type === "CONSTRUCTOR"
                 ? constructors.map((c) => (
                     <div
-                      key={c.id}
+                      key={c.name}
                       onClick={() => onSelect(c)}
                       className="flex items-center gap-3 bg-black/20 p-3 rounded-xl border border-gray-600 cursor-pointer"
                     >
@@ -55,7 +57,7 @@ export default function DriverModal({
                   ))
                 : drivers.map((d) => (
                     <div
-                      key={d.id}
+                      key={d.name}
                       onClick={() => onSelect(d)}
                       className="flex items-center gap-3 bg-black/20 p-3 rounded-xl border border-gray-600 cursor-pointer"
                     >
