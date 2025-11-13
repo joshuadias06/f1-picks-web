@@ -10,7 +10,7 @@ export default function BottomNav() {
   const [openMore, setOpenMore] = useState(false);
 
   const navItems = [
-    { icon: Home, path: "/home" },
+    { icon: Home, path: "/" },
     { icon: Trophy, path: "/picks" },
     { icon: BarChart3, path: "/leaderboard" },
     { icon: User, path: "/profile" },
