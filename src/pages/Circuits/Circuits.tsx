@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import BottomNav from "@/components/BottomNav/BottomNav";
 import { useRaces } from "@/hooks/Circuits/useRace";
 import { countryToCode } from "@/utils/countryToCode";
+import { circuitMap } from "@/utils/circuitMap";
 
 export default function Circuits() {
   const { races, loading } = useRaces();
@@ -17,6 +18,7 @@ export default function Circuits() {
 
   return (
     <div className="min-h-screen bg-dark text-ice font-f1-regular flex flex-col pb-24">
+      
       {/* Header */}
       <header className="flex justify-between items-center p-4 mb-4">
         <div className="flex items-center gap-3">
@@ -35,13 +37,14 @@ export default function Circuits() {
         {races.map((race, index) => {
           const country = race.Circuit.Location.country;
           const iso = (countryToCode[country] || "un").toLowerCase();
+          const circuitName = race.Circuit.circuitName;
+
+          const trackImg = circuitMap[circuitName];
 
           const dateFormatted = new Date(race.date).toLocaleDateString("en-US", {
             month: "short",
             day: "2-digit",
           });
-
-          console.log("Country:", country, "| ISO:", iso);
 
           return (
             <motion.div
@@ -49,6 +52,7 @@ export default function Circuits() {
               whileTap={{ scale: 0.97 }}
               className="bg-metallic rounded-2xl p-3 flex flex-col justify-between shadow-[0_0_15px_rgba(0,0,0,0.3)]"
             >
+              {/* Flag + Date */}
               <div className="flex justify-between items-center mb-2">
                 <span className={`fi fi-${iso} w-6 h-4 rounded-sm`}></span>
 
@@ -57,13 +61,22 @@ export default function Circuits() {
                 </span>
               </div>
 
-
-              <div className="w-full h-20 bg-gray-800/40 rounded-lg mb-3 flex items-center justify-center">
-                <span className="text-gray-600 text-sm">Track Image</span>
+              {/* SVG directly over the card */}
+              <div className="w-full h-20 flex items-center justify-center mb-3">
+                {trackImg ? (
+                  <img
+                    src={trackImg}
+                    alt={circuitName}
+                    className="w-full h-full object-contain opacity-90"
+                  />
+                ) : (
+                  <span className="text-gray-600 text-sm">No Image</span>
+                )}
               </div>
 
+              {/* Circuit Name */}
               <p className="text-center font-f1-bold text-sm leading-tight">
-                {race.Circuit.circuitName}
+                {circuitName}
               </p>
             </motion.div>
           );
