@@ -2,9 +2,15 @@ import { motion } from "framer-motion";
 import { Search } from "lucide-react";
 import BottomNav from "@/components/BottomNav/BottomNav";
 import { useDrivers } from "@/hooks/Drivers/useDrivers";
+import { teamColors } from "@/utils/teamColors";
 
 export default function Drivers() {
   const { drivers, loading } = useDrivers();
+
+  function getTeamColor(team: string) {
+    const key = team.toLowerCase();
+    return teamColors[key] ?? "#444"; // fallback
+  }
 
   return (
     <div className="min-h-screen bg-dark text-ice font-f1-regular flex flex-col p-4">
@@ -24,40 +30,46 @@ export default function Drivers() {
           initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
         >
-          {drivers.map((driver, index) => (
-            <motion.div
-              key={driver.code || index}
-              whileTap={{ scale: 0.98 }}
-              className="bg-metallic rounded-2xl p-3 flex items-center justify-between shadow-[0_0_10px_rgba(0,0,0,0.3)]"
-            >
-              {/* Left side */}
-              <div className="flex items-center gap-3">
-                {/* HEAD-ONLY IMAGE CROP */}
-                <div className="relative w-16 h-16 rounded-xl overflow-hidden border-l-4 border-primary bg-black/30">
-                  <img
-                    src={driver.image ?? "/drivers/default.png"}
-                    alt={driver.name}
-                    className="object-cover object-top w-full h-full"
-                  />
-                </div>
+          {drivers.map((driver, index) => {
+            const teamColor = getTeamColor(driver.team);
 
-                <div className="flex flex-col leading-tight">
-                  <h2 className="font-f1-bold text-base">{driver.name}</h2>
-                  <p className="text-gray-400 text-sm">{driver.team}</p>
-                </div>
-              </div>
+            return (
+              <motion.div
+                key={driver.code || index}
+                whileTap={{ scale: 0.98 }}
+                style={{ backgroundColor: teamColor }}
+                className="relative rounded-2xl p-3 flex items-center justify-between shadow-lg"
+              >
+                {/* IMAGE FULL IN CARD */}
+                <img
+                  src={driver.image ?? "/drivers/default.png"}
+                  alt={driver.name}
+                  className="absolute left-0 top-0 h-full w-28 object-cover object-top opacity-90"
+                />
 
-              {/* Right side */}
-              {driver.position ? (
-                <div className="flex flex-col items-end leading-tight">
-                  <h3 className="font-f1-bold text-blue text-lg">{driver.position}</h3>
-                  <span className="text-xs text-blue tracking-wider">POS</span>
+                {/* Content */}
+                <div className="ml-28 flex justify-between w-full">
+                  <div className="flex flex-col leading-tight">
+                    <h2 className="font-f1-bold text-base">{driver.name}</h2>
+                    <p className="text-gray-200 text-sm">{driver.team}</p>
+                  </div>
+
+                  {driver.position ? (
+                    <div className="flex flex-col items-end leading-tight">
+                      <h3 className="font-f1-bold text-white text-lg">
+                        {driver.position}
+                      </h3>
+                      <span className="text-xs text-white tracking-wider">
+                        POS
+                      </span>
+                    </div>
+                  ) : (
+                    <span className="text-gray-100 text-xs">--</span>
+                  )}
                 </div>
-              ) : (
-                <span className="text-gray-500 text-xs">--</span>
-              )}
-            </motion.div>
-          ))}
+              </motion.div>
+            );
+          })}
         </motion.div>
       )}
 
