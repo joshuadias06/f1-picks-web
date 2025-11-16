@@ -17,6 +17,7 @@ export default function Drivers() {
       {loading && (
         <p className="text-gray-400 text-center mt-6">Loading drivers...</p>
       )}
+
       {!loading && (
         <motion.div
           className="flex flex-col gap-4"
@@ -29,19 +30,24 @@ export default function Drivers() {
               whileTap={{ scale: 0.98 }}
               className="bg-metallic rounded-2xl p-3 flex items-center justify-between shadow-[0_0_10px_rgba(0,0,0,0.3)]"
             >
+              {/* Left side */}
               <div className="flex items-center gap-3">
-                <div className="relative w-14 h-14 rounded-xl overflow-hidden border-l-4 border-primary">
+                {/* HEAD-ONLY IMAGE CROP */}
+                <div className="relative w-16 h-16 rounded-xl overflow-hidden border-l-4 border-primary bg-black/30">
                   <img
                     src={driver.image ?? "/drivers/default.png"}
                     alt={driver.name}
-                    className="object-cover w-full h-full"
+                    className="object-cover object-top w-full h-full"
                   />
                 </div>
+
                 <div className="flex flex-col leading-tight">
                   <h2 className="font-f1-bold text-base">{driver.name}</h2>
                   <p className="text-gray-400 text-sm">{driver.team}</p>
                 </div>
               </div>
+
+              {/* Right side */}
               {driver.position ? (
                 <div className="flex flex-col items-end leading-tight">
                   <h3 className="font-f1-bold text-blue text-lg">{driver.position}</h3>
@@ -50,7 +56,6 @@ export default function Drivers() {
               ) : (
                 <span className="text-gray-500 text-xs">--</span>
               )}
-
             </motion.div>
           ))}
         </motion.div>

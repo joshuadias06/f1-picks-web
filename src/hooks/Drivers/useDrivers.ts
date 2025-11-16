@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { get2025DriverStandings } from "@/services/Drivers/driversApi";
+import { driverImage } from "@/utils/driverImage";
 
 type DriverStanding = {
   name: string;
@@ -19,14 +20,21 @@ export function useDrivers() {
       try {
         const standings = await get2025DriverStandings();
 
-        const formatted = standings.map((entry: any) => ({
-          name: `${entry.Driver.givenName} ${entry.Driver.familyName}`,
-          team: entry.Constructors?.[0]?.name ?? "Unknown",
-          points: Number(entry.points),
-          position: Number(entry.position),
-          code: entry.Driver.code,
-          image: `/drivers/${entry.Driver.code?.toLowerCase()}.png` || "/drivers/default.png"
-        }));
+        const formatted = standings.map((entry: any) => {
+          const lastName = entry.Driver.familyName
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .toLowerCase();
+
+          return {
+            name: `${entry.Driver.givenName} ${entry.Driver.familyName}`,
+            team: entry.Constructors?.[0]?.name ?? "Unknown",
+            points: Number(entry.points),
+            position: Number(entry.position),
+            code: entry.Driver.code,
+            image: driverImage[lastName] ?? "/drivers/default.png",
+          };
+        });
 
         setDrivers(formatted);
       } catch (err) {
