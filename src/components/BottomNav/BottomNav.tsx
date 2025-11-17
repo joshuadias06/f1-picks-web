@@ -18,7 +18,6 @@ export default function BottomNav() {
 
   return (
     <>
-      {/* Modern Glass Bottom Navigation */}
       <motion.div
         initial={{ y: 80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -46,7 +45,6 @@ export default function BottomNav() {
                   px-4 py-2
                 "
               >
-                {/* Icon */}
                 <motion.div
                   className={`
                     w-10 h-10 flex items-center justify-center rounded-xl
@@ -62,7 +60,6 @@ export default function BottomNav() {
                   />
                 </motion.div>
 
-                {/* Glowing Indicator under active icon */}
                 {active && (
                   <motion.div
                     layoutId="active-nav-indicator"
@@ -77,7 +74,6 @@ export default function BottomNav() {
           );
         })}
 
-        {/* More button */}
         <motion.button
           whileTap={{ scale: 0.85 }}
           onClick={() => setOpenMore(true)}

@@ -2,20 +2,12 @@ import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import { LineChart, Line, XAxis, ResponsiveContainer } from "recharts";
 import BottomNav from "@/components/BottomNav/BottomNav";
+import { Link, useParams } from "react-router-dom";
+import { useDriver } from "@/hooks/Drivers/useDriver";
 
 export default function DriverDetails() {
-  const driver = {
-    name: "Max Verstappen",
-    team: "Oracle Red Bull Racing",
-    country: "Netherlands",
-    flag: "/flags/netherlands.png",
-    image: "/drivers/max.png",
-    standing: 1,
-    points: 401,
-    wins: 15,
-    podiums: 18,
-    progress: +18.5,
-  };
+  const { id } = useParams(); // <-- agora correto
+  const { driver, loading } = useDriver(id);
 
   const chartData = [
     { race: "BAH", points: 45 },
@@ -26,11 +18,30 @@ export default function DriverDetails() {
     { race: "MIA", points: 70 },
   ];
 
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-dark text-gray-400 flex items-center justify-center">
+        Loading driver...
+      </div>
+    );
+  }
+
+  if (!driver) {
+    return (
+      <div className="min-h-screen bg-dark text-gray-400 flex items-center justify-center">
+        Driver not found
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-dark text-ice font-f1-regular flex flex-col p-4 pb-16">
+    <div className="min-h-screen bg-dark text-ice font-f1-regular flex flex-col p-4 pb-24">
+      
       {/* Header */}
       <header className="flex items-center gap-3 mb-6">
-        <ArrowLeft className="text-ice w-6 h-6" />
+        <Link to="/drivers">
+          <ArrowLeft className="text-ice w-6 h-6" />
+        </Link>
       </header>
 
       {/* Driver Info */}
@@ -43,7 +54,7 @@ export default function DriverDetails() {
           <img
             src={driver.image}
             alt={driver.name}
-            className="object-cover w-full h-full"
+            className="object-cover w-full h-full object-top"
           />
         </motion.div>
 
@@ -55,40 +66,22 @@ export default function DriverDetails() {
           {driver.name}
         </motion.h1>
         <p className="text-gray-400 text-sm">{driver.team}</p>
-        <div className="flex items-center justify-center gap-2 mt-1">
-          <img
-            src={driver.flag}
-            alt={driver.country}
-            className="w-5 h-4 rounded-sm"
-          />
-          <span className="text-gray-400 text-sm">{driver.country}</span>
-        </div>
       </div>
 
-      {/* Stats Section */}
+      {/* Stats */}
       <div className="grid grid-cols-2 gap-3 mb-8">
         <div className="bg-metallic rounded-xl p-4 text-center border border-primary/50">
-          <p className="text-gray-400 text-xs mb-1">STANDING</p>
-          <p className="font-f1-bold text-2xl">{driver.standing}</p>
+          <p className="text-gray-400 text-xs mb-1">POSITION</p>
+          <p className="font-f1-bold text-2xl">{driver.position}</p>
         </div>
 
         <div className="bg-metallic rounded-xl p-4 text-center">
           <p className="text-gray-400 text-xs mb-1">POINTS</p>
           <p className="font-f1-bold text-2xl">{driver.points}</p>
         </div>
-
-        <div className="bg-metallic rounded-xl p-4 text-center">
-          <p className="text-gray-400 text-xs mb-1">WINS</p>
-          <p className="font-f1-bold text-2xl">{driver.wins}</p>
-        </div>
-
-        <div className="bg-metallic rounded-xl p-4 text-center">
-          <p className="text-gray-400 text-xs mb-1">PODIUMS</p>
-          <p className="font-f1-bold text-2xl">{driver.podiums}</p>
-        </div>
       </div>
 
-      {/* Season Progress */}
+      {/* Chart */}
       <div>
         <h2 className="font-f1-bold text-lg mb-3">Season Progress</h2>
 
@@ -100,9 +93,6 @@ export default function DriverDetails() {
                 {driver.points} <span className="text-sm">PTS</span>
               </p>
             </div>
-            <span className="text-blue font-f1-bold text-sm">
-              ↑ +{driver.progress}%
-            </span>
           </div>
 
           <div className="h-40">
@@ -126,6 +116,7 @@ export default function DriverDetails() {
           </div>
         </div>
       </div>
+
       <BottomNav />
     </div>
   );
