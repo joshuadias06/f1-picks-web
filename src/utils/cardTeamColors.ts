@@ -1,6 +1,6 @@
 export const cardTeamColors: Record<string, string> = {
-  "rb f1 team": "#ffffff",
-  "red bull": "#FFCC00",
+  "rb f1 team": "#1763d7",
+  "red bull": "#1763d7",
 
   "mercedes": "#00d2b2",
   "mercedes-amg": "#00d2b2",

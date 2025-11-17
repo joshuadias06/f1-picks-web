@@ -1,29 +1,39 @@
 export const teamColors: Record<string, string> = {
-  "rb f1 team": "#093b8c",
-  "red bull": "#093b8c",
+  // Red Bull Racing
+  "rb f1 team": "linear-gradient(135deg, #001840 0%, #093b8c 100%)",
+  "red bull": "linear-gradient(135deg, #001840 0%, #093b8c 100%)",
 
-  "mercedes": "#008069",
-  "mercedes-amg": "#008069",
+  // Mercedes
+  "mercedes": "linear-gradient(135deg, #002b23 0%, #00d2b2 100%)",
+  "mercedes-amg": "linear-gradient(135deg, #002b23 0%, #00d2b2 100%)",
 
-  "scuderia ferrari": "#790109",
-  "ferrari": "#790109",
+  // Ferrari
+  "scuderia ferrari": "linear-gradient(135deg, #3c0003 0%, #e6102f 100%)",
+  "ferrari": "linear-gradient(135deg, #3c0003 0%, #e6102f 100%)",
 
-  "mclaren": "#8e3900",
+  // McLaren
+  "mclaren": "linear-gradient(135deg, #4a1f00 0%, #e96f00 100%)",
 
-  "alpine f1 team": "#005e92",
-  "alpine": "#005e92",
+  // Alpine
+  "alpine f1 team": "linear-gradient(135deg, #001f33 0%, #009ce2 100%)",
+  "alpine": "linear-gradient(135deg, #001f33 0%, #009ce2 100%)",
 
-  "aston martin": "#006F62",
-  "aston martin aramco": "#006F62",
+  // Aston Martin
+  "aston martin": "linear-gradient(135deg, #00362e 0%, #1f936b 100%)",
+  "aston martin aramco": "linear-gradient(135deg, #00362e 0%, #1f936b 100%)",
 
-  "sauber": "#007603",
-  "kick sauber": "#007603",
+  // Sauber / Kick Sauber
+  "sauber": "linear-gradient(135deg, #003c01 0%, #01ba0d 100%)",
+  "kick sauber": "linear-gradient(135deg, #003c01 0%, #01ba0d 100%)",
 
-  "haas f1 team": "#595b5e",
-  "haas": "#595b5e",
+  // Haas
+  "haas f1 team": "linear-gradient(135deg, #1e1f20 0%, #979a9d 100%)",
+  "haas": "linear-gradient(135deg, #1e1f20 0%, #979a9d 100%)",
 
-  "rb": "#045234",
-  "racing bulls": "#045234",
+  // Racing Bulls
+  "rb": "linear-gradient(135deg, #001e40 0%, #6894fb 100%)",
+  "racing bulls": "linear-gradient(135deg, #001e40 0%, #6894fb 100%)",
 
-  "williams": "#041690",
+  // Williams
+  "williams": "linear-gradient(135deg, #000a2b 0%, #1763d7 100%)",
 };

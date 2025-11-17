@@ -5,6 +5,7 @@ import { useDrivers } from "@/hooks/Drivers/useDrivers";
 import { teamColors } from "@/utils/teamColors";
 import { cardTeamColors } from "@/utils/cardTeamColors";
 import { Link } from "react-router-dom";
+import { OverlayPattern } from "@/components/OverlayPattern/overlayPattern";
 
 export default function Drivers() {
   const { drivers, loading } = useDrivers();
@@ -42,27 +43,30 @@ export default function Drivers() {
             const accent = getTeamAccent(driver.team);
 
             return (
-              <Link to={`/drivers/${driver.id}`}>
+              <Link key={driver.id} to={`/drivers/${driver.id}`}>
                 <motion.div
                   whileTap={{ scale: 0.98 }}
-                  style={{ backgroundColor: bg }}
+                  style={{ background: bg }}
                   className="relative rounded-2xl p-3 flex items-center justify-between shadow-lg overflow-hidden"
                 >
+                  {/* OVERLAY */}
+                  <OverlayPattern />
+
                   {/* Accent stripe */}
                   <div
                     style={{ backgroundColor: accent }}
-                    className="absolute left-0 top-0 w-[6px] h-full"
+                    className="absolute left-0 top-0 w-[6px] h-full z-10"
                   />
 
                   {/* Driver Image */}
                   <img
                     src={driver.image ?? "/drivers/default.png"}
                     alt={driver.name}
-                    className="absolute left-2 top-0 h-full w-28 object-cover object-top opacity-90"
+                    className="absolute left-2 top-0 h-full w-28 object-cover object-top opacity-90 z-10"
                   />
 
                   {/* Content */}
-                  <div className="ml-28 flex justify-between w-full">
+                  <div className="ml-28 flex justify-between w-full relative z-10">
                     <div className="flex flex-col leading-tight">
                       <h2 className="font-f1-bold text-base">{driver.name}</h2>
                       <p className="text-gray-200 text-sm">{driver.team}</p>

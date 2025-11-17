@@ -1,5 +1,5 @@
 const BASE =
-  "https://raw.githubusercontent.com/joshuadias06/assetsF1/main";
+  "https://raw.githubusercontent.com/joshuadias06/assetsF1/refs/heads/main/drivers";
 
 export const driverImage: Record<string, string> = {
   // Red Bull
