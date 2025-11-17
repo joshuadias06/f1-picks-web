@@ -3,14 +3,21 @@ import { get2025DriverStandings } from "@/services/Drivers/driversApi";
 import { driverImage } from "@/utils/driverImage";
 
 type DriverStanding = {
-  id: string; // <--- 🔥 NOVO
+  id: string;
   name: string;
   team: string;
   points: number;
   position: number;
+  number?: string;
+  permanentNumber?: string;
+  wins: number;
+  podiums: number;
+  birthDate: string;
+  nationality: string;
   code?: string;
   image?: string;
 };
+
 
 const driverTeamOverride: Record<string, string> = {
   verstappen: "Red Bull",
@@ -47,8 +54,10 @@ export function useDrivers() {
         );
 
         const formatted = filtered.map((entry: any) => {
-          const id = entry.Driver.driverId; // <--- 🔥 from API (best identifier)
-          const lastName = entry.Driver.familyName
+          const driver = entry.Driver;
+
+          const id = driver.driverId;
+          const lastName = driver.familyName
             .normalize("NFD")
             .replace(/[\u0300-\u036f]/g, "")
             .toLowerCase();
@@ -58,13 +67,20 @@ export function useDrivers() {
 
           return {
             id,
-            name: `${entry.Driver.givenName} ${entry.Driver.familyName}`,
+            name: `${driver.givenName} ${driver.familyName}`,
             team,
             points: Number(entry.points),
             position: Number(entry.position),
-            code: entry.Driver.code,
+            number: driver.code,
+            permanentNumber: driver.permanentNumber,
+            wins: Number(entry.wins ?? 0),
+            podiums: Number(entry.podiums ?? 0),
+            birthDate: driver.dateOfBirth,
+            nationality: driver.nationality,
+            code: driver.code,
             image: driverImage[lastName] ?? "/drivers/default.png",
           };
+
         });
 
         setDrivers(formatted);
