@@ -2,6 +2,7 @@ export const teamColors: Record<string, string> = {
   // Red Bull Racing
   "rb f1 team": "linear-gradient(135deg, #001840 0%, #093b8c 100%)",
   "red bull": "linear-gradient(135deg, #001840 0%, #093b8c 100%)",
+  "red_bull": "linear-gradient(135deg, #001840 0%, #093b8c 100%)",
 
   // Mercedes
   "mercedes": "linear-gradient(135deg, #002b23 0%, #00d2b2 100%)",
@@ -21,6 +22,7 @@ export const teamColors: Record<string, string> = {
   // Aston Martin
   "aston martin": "linear-gradient(135deg, #00362e 0%, #1f936b 100%)",
   "aston martin aramco": "linear-gradient(135deg, #00362e 0%, #1f936b 100%)",
+  "aston_martin": "linear-gradient(135deg, #00362e 0%, #1f936b 100%)",
 
   // Sauber / Kick Sauber
   "sauber": "linear-gradient(135deg, #003c01 0%, #01ba0d 100%)",
