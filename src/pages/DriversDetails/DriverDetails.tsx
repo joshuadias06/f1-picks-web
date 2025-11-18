@@ -8,6 +8,7 @@ import { formatDateBR } from "@/utils/formatDateBR";
 import { OverlayPattern } from "@/components/OverlayPattern/overlayPattern";
 import { StatCard } from "@/components/StartCard/StartCard";
 import { teamLogo } from "@/utils/teamLogo";
+import { TeamCard } from "@/components/TeamCard/TeamCard";
 
 
 export default function DriverDetails() {
@@ -96,21 +97,8 @@ export default function DriverDetails() {
       </div>
 
       {/* TEAM / CAR CARD */}
-      <div
-        className="relative mt-6 rounded-2xl p-4 flex justify-between items-center overflow-hidden"
-        style={{ background: teamColor }}
-      >
-        <OverlayPattern />
-
-        <div className="relative z-10">
-          <p className="font-f1-bold text-lg">{driver.team}</p>
-          <p className="text-gray-200 text-sm opacity-80">Constructor</p>
-        </div>
-
-        <img
-          src={`/cars/${driver.team.toLowerCase()}.png`}
-          className="w-32 h-20 object-contain relative z-10"
-        />
+      <div className="mt-3">
+        <TeamCard team={driver.team} />
       </div>
 
       <BottomNav />
