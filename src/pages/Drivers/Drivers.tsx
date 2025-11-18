@@ -1,14 +1,43 @@
 import { motion } from "framer-motion";
-import { Search } from "lucide-react";
+import { SlidersHorizontal } from "lucide-react";
 import BottomNav from "@/components/BottomNav/BottomNav";
 import { useDrivers } from "@/hooks/Drivers/useDrivers";
 import { teamColors } from "@/utils/teamColors";
 import { cardTeamColors } from "@/utils/cardTeamColors";
 import { Link } from "react-router-dom";
 import { OverlayPattern } from "@/components/OverlayPattern/overlayPattern";
+import { useState, useMemo } from "react";
+import { FilterMenu } from "@/components/FilterMenu/FilterMenu";
 
 export default function Drivers() {
   const { drivers, loading } = useDrivers();
+
+  const [openFilters, setOpenFilters] = useState(false);
+  const [selectedTeam, setSelectedTeam] = useState("all");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
+
+  // Teams list for menu
+  const teams = useMemo(
+    () => ["all", ...new Set(drivers.map((d) => d.team))],
+    [drivers]
+  );
+
+  // Filtering + sorting
+  const filteredDrivers = useMemo(() => {
+    let list = [...drivers];
+
+    if (selectedTeam !== "all") {
+      list = list.filter((d) => d.team === selectedTeam);
+    }
+
+    list.sort((a, b) =>
+      sortOrder === "asc"
+        ? a.position - b.position
+        : b.position - a.position
+    );
+
+    return list;
+  }, [drivers, selectedTeam, sortOrder]);
 
   function getTeamColor(team: string) {
     return teamColors[team.toLowerCase()] ?? "#444";
@@ -20,25 +49,45 @@ export default function Drivers() {
 
   return (
     <div className="min-h-screen bg-dark text-ice font-f1-regular flex flex-col p-4 pb-24">
-      {/* Header */}
+
+      {/* HEADER */}
       <header className="flex justify-between items-center mb-6">
         <h1 className="font-f1-bold text-xl tracking-wide">DRIVERS</h1>
-        <Search className="text-ice w-6 h-6" />
+
+        <button
+          onClick={() => setOpenFilters(true)}
+          className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/5 border border-white/10 active:scale-95 transition"
+        >
+          <SlidersHorizontal className="w-5 h-5" />
+          <span className="font-f1-bold text-sm">FILTER</span>
+        </button>
       </header>
 
-      {/* Loading */}
-      {loading && (
-        <p className="text-gray-400 text-center mt-6">Loading drivers...</p>
-      )}
+      {/* FILTER MENU */}
+      <FilterMenu
+        open={openFilters}
+        onClose={() => setOpenFilters(false)}
+        teams={teams}
+        selectedTeam={selectedTeam}
+        setSelectedTeam={(v) => {
+          setSelectedTeam(v);
+          setOpenFilters(false); // auto-close
+        }}
+        sortOrder={sortOrder}
+        setSortOrder={(v) => {
+          setSortOrder(v);
+          setOpenFilters(false); // auto-close
+        }}
+      />
 
-      {/* Drivers List */}
+      {/* LIST */}
       {!loading && (
         <motion.div
           className="flex flex-col gap-4"
           initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
         >
-          {drivers.map((driver) => {
+          {filteredDrivers.map((driver) => {
             const bg = getTeamColor(driver.team);
             const accent = getTeamAccent(driver.team);
 
@@ -49,7 +98,6 @@ export default function Drivers() {
                   style={{ background: bg }}
                   className="relative rounded-2xl p-3 flex items-center justify-between shadow-lg overflow-hidden"
                 >
-                  {/* OVERLAY */}
                   <OverlayPattern />
 
                   {/* Accent stripe */}
@@ -60,8 +108,7 @@ export default function Drivers() {
 
                   {/* Driver Image */}
                   <img
-                    src={driver.image ?? "/drivers/default.png"}
-                    alt={driver.name}
+                    src={driver.image}
                     className="absolute left-2 top-0 h-full w-28 object-cover object-top opacity-90 z-10"
                   />
 
@@ -74,7 +121,7 @@ export default function Drivers() {
 
                     <div className="flex flex-col items-end leading-tight">
                       <h3 className="font-f1-bold text-white text-lg">
-                        {driver.points ?? "--"}
+                        {driver.points}
                       </h3>
                       <span className="text-xs text-white tracking-wider">
                         PTS

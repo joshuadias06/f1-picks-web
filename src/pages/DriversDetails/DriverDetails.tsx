@@ -58,13 +58,13 @@ export default function DriverDetails() {
 
         <span
           className="absolute top-3 left-4 font-f1-bold text-7xl z-0"
-          style={{ color: "#ffffff" }} // você pode mudar a cor aqui se quiser
+          style={{ color: "#ffffff" }}
         >
           {driver.number}
         </span>
 
 
-        {/* TEAM LOGO (aligned with number) */}
+        {/* TEAM LOGO */}
         {teamLogoUrl && (
           <img
             src={teamLogoUrl}
@@ -72,7 +72,7 @@ export default function DriverDetails() {
           />
         )}
 
-        {/* Driver Image (in front of background code) */}
+        {/* Driver Image */}
         <img
           src={driver.image}
           className="absolute inset-0 w-full h-full object-cover object-top scale-110 z-10"
