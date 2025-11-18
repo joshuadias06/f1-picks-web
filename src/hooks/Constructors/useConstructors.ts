@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { get2025ConstructorStandings } from "@/services/Constructors/ConstructorsApi";
 
 export type ConstructorStanding = {
   id: string;
@@ -16,10 +17,7 @@ export function useConstructors() {
   useEffect(() => {
     async function load() {
       try {
-        const res = await fetch("https://api.jolpi.ca/ergast/f1/2025/constructorstandings/");
-        const data = await res.json();
-
-        const list = data.MRData.StandingsTable.StandingsLists[0].ConstructorStandings;
+        const list = await get2025ConstructorStandings();
 
         const formatted = list.map((entry: any) => ({
           id: entry.Constructor.constructorId,
@@ -32,7 +30,7 @@ export function useConstructors() {
 
         setConstructors(formatted);
       } catch (e) {
-        console.error("Failed to load constructor standings");
+        console.error("Failed to load constructor standings", e);
       } finally {
         setLoading(false);
       }
