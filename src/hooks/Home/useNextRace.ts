@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { useRaces } from "../Circuits/useRaces";
 import { countryToCode } from "@/utils/countryToCode";
 
-type RaceCardData = {
+export type RaceCardData = {
+  id: string;
   title: string;
   date: Date;
   dateFormatted: string;
@@ -45,6 +46,7 @@ export function useNextRace() {
       const iso = (countryToCode[country] || "un").toLowerCase();
 
       return {
+        id: String(race.round),
         title: race.raceName,
         date: race._when,
         dateFormatted: race._when.toLocaleString("en-US", {

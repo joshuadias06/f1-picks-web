@@ -1,8 +1,10 @@
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import UpcomingRaceCard from "./UpcomingRaceCard";
 
 type Props = {
   races: Array<{
+    id: string;
     title: string;
     dateFormatted: string;
     flagIso?: string;
@@ -12,6 +14,8 @@ type Props = {
 };
 
 export default function UpcomingRacesCarousel({ races, loading }: Props) {
+  const navigate = useNavigate();
+
   if (loading)
     return (
       <div className="w-full flex justify-center py-10 text-gray-400">
@@ -35,10 +39,11 @@ export default function UpcomingRacesCarousel({ races, loading }: Props) {
         <motion.div
           key={index}
           style={{ scrollSnapAlign: "center" }}
-          className="min-w-[260px] max-w-[260px]"
+          className="min-w-[260px] max-w-[260px] cursor-pointer"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: index * 0.1 }}
+          onClick={() => navigate(`/circuits/${race.id}`)}
         >
           <UpcomingRaceCard race={race} loading={false} />
         </motion.div>

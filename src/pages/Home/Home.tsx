@@ -9,12 +9,11 @@ import { useNextRace } from "@/hooks/Home/useNextRace";
 export default function Home() {
   const { user, podium } = homeData;
 
-  // Alterado: agora o hook deve retornar TODAS as próximas corridas
   const { upcomingRaces, loading } = useNextRace();
 
   return (
     <div className="min-h-screen bg-dark text-ice font-f1-regular flex flex-col items-center p-4 pb-24">
-      
+
       {/* Header */}
       <header className="w-full flex justify-between items-center mb-6">
         <div className="flex items-center gap-2">
@@ -45,13 +44,13 @@ export default function Home() {
         </div>
       </motion.div>
 
-      {/* UPCOMING RACES - CAROUSEL */}
+      {/* Upcoming Races */}
       <section className="w-full mb-8">
         <h2 className="font-f1-wide text-xl mb-4">Upcoming Races</h2>
 
-        <UpcomingRacesCarousel 
-          races={upcomingRaces ?? []} 
-          loading={loading} 
+        <UpcomingRacesCarousel
+          races={upcomingRaces ?? []}
+          loading={loading}
         />
       </section>
 
