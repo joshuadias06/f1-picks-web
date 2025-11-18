@@ -22,11 +22,11 @@ function App() {
           <Route path="/leaderboard" element={<Leaderboard />} />
           <Route path="/circuits" element={<Circuits />} />
           <Route path="/drivers" element={<Drivers />} />
-          <Route path="/teams" element={<Teams />} />
-          <Route path="/calendar" element={<Calendar />} />
           <Route path="/drivers/:id" element={<DriverDetails />} />
+          <Route path="/teams" element={<Teams />} />
+          <Route path="/teams/:id" element={<ConstructorDetails />} />
+          <Route path="/calendar" element={<Calendar />} />
           <Route path="/race/:id" element={<RaceDetails />} />
-          <Route path="/team/:id" element={<ConstructorDetails />} />
           <Route path="/profile" element={<Profile />} />
         </Routes>
       </div>
@@ -35,4 +35,3 @@ function App() {
 }
 
 export default App;
-
