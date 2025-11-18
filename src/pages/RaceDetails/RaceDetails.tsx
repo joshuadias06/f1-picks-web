@@ -7,7 +7,6 @@ import { circuitMap } from "@/utils/circuitMap";
 import { countryToCode } from "@/utils/countryToCode";
 import { SessionCard } from "@/components/SessionCard/SessionCard";
 import { StatCard } from "@/components/StartCard/StartCard";
-import { formatDateBR } from "@/utils/formatDateBR";
 
 export default function RaceDetails() {
   const navigate = useNavigate();
@@ -15,10 +14,18 @@ export default function RaceDetails() {
   const { race, loading } = useRace(id);
 
   if (loading)
-    return <div className="min-h-screen bg-dark text-ice flex justify-center items-center">Loading...</div>;
+    return (
+      <div className="min-h-screen bg-dark text-ice flex justify-center items-center">
+        Loading...
+      </div>
+    );
 
   if (!race)
-    return <div className="min-h-screen bg-dark text-ice flex justify-center items-center">Race not found</div>;
+    return (
+      <div className="min-h-screen bg-dark text-ice flex justify-center items-center">
+        Race not found
+      </div>
+    );
 
   const circuitName = race.Circuit.circuitName;
   const country = race.Circuit.Location.country;
@@ -48,7 +55,10 @@ export default function RaceDetails() {
         animate={{ opacity: 1, scale: 1 }}
       >
         {trackImg && (
-          <img src={trackImg} className="rounded-2xl w-full max-w-sm object-contain opacity-90" />
+          <img
+            src={trackImg}
+            className="rounded-2xl w-full max-w-sm object-contain opacity-90"
+          />
         )}
       </motion.div>
 
@@ -57,8 +67,8 @@ export default function RaceDetails() {
 
         <SessionCard
           label="Corrida"
-          date={formatDateBR(race.date)}
-          time={race.time ?? "--"}
+          date={race.date}
+          time={race.time}
           color="#111"
         />
 
@@ -77,36 +87,71 @@ export default function RaceDetails() {
         />
       </div>
 
-      {/* Practice + Qualifying */}
-      <div className="grid grid-cols-2 gap-3 w-full mt-6">
-        <SessionCard
-          label="FP1"
-          date={formatDateBR(race.FirstPractice?.date)}
-          time={race.FirstPractice?.time ?? "--"}
-          color="#111"
-        />
+      {/* Practice + Qualifying + Sprint Sessions */}
+      <div className="grid grid-cols-2 gap-3 w-full mt-3">
 
-        <SessionCard
-          label="FP2"
-          date={formatDateBR(race.SecondPractice?.date)}
-          time={race.SecondPractice?.time ?? "--"}
-          color="#111"
-        />
+        {/* FP1 */}
+        {race.FirstPractice?.date && (
+          <SessionCard
+            label="FP1"
+            date={race.FirstPractice.date}
+            time={race.FirstPractice.time}
+            color="#111"
+          />
+        )}
 
-        <SessionCard
-          label="FP3"
-          date={formatDateBR(race.ThirdPractice?.date)}
-          time={race.ThirdPractice?.time ?? "--"}
-          color="#111"
-        />
+        {/* FP2 */}
+        {race.SecondPractice?.date && (
+          <SessionCard
+            label="FP2"
+            date={race.SecondPractice.date}
+            time={race.SecondPractice.time}
+            color="#111"
+          />
+        )}
 
-        <SessionCard
-          label="Qualifying"
-          date={formatDateBR(race.Qualifying?.date)}
-          time={race.Qualifying?.time ?? "--"}
-          color="#111"
-        />
+        {/* FP3 */}
+        {race.ThirdPractice?.date && (
+          <SessionCard
+            label="FP3"
+            date={race.ThirdPractice.date}
+            time={race.ThirdPractice.time}
+            color="#111"
+          />
+        )}
+
+        {/* Sprint Qualifying */}
+        {race.SprintQualifying?.date && (
+          <SessionCard
+            label="Sprint Qualifying"
+            date={race.SprintQualifying.date}
+            time={race.SprintQualifying.time}
+            color="#111"
+          />
+        )}
+
+        {/* Sprint */}
+        {race.Sprint?.date && (
+          <SessionCard
+            label="Sprint"
+            date={race.Sprint.date}
+            time={race.Sprint.time}
+            color="#111"
+          />
+        )}
+
+        {/* Qualifying — aparece em AMBOS os formatos (com ou sem Sprint) */}
+        {race.Qualifying?.date && (
+          <SessionCard
+            label="Qualifying"
+            date={race.Qualifying.date}
+            time={race.Qualifying.time}
+            color="#111"
+          />
+        )}
+
       </div>
+
 
       <BottomNav />
     </div>

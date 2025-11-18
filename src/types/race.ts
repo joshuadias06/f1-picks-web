@@ -1,8 +1,14 @@
+export type RaceSession = {
+  date: string;
+  time: string;
+};
+
 export type Race = {
+  season: string;
+  round: string;
   raceName: string;
   date: string;
   time?: string;
-  round?: string;
 
   Circuit: {
     circuitName: string;
@@ -14,23 +20,12 @@ export type Race = {
     };
   };
 
-  FirstPractice?: {
-    date: string;
-    time: string;
-  };
+  FirstPractice?: RaceSession;
+  SecondPractice?: RaceSession;
+  ThirdPractice?: RaceSession;
 
-  SecondPractice?: {
-    date: string;
-    time: string;
-  };
+  Qualifying?: RaceSession;
 
-  ThirdPractice?: {
-    date: string;
-    time: string;
-  };
-
-  Qualifying?: {
-    date: string;
-    time: string;
-  };
+  Sprint?: RaceSession;               // ← ADICIONADO
+  SprintQualifying?: RaceSession;     // ← ADICIONADO
 };
