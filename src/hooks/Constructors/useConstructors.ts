@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { get2025ConstructorStandings } from "@/services/Constructors/ConstructorsApi";
+import { get2025ConstructorStandings } from "@/services/Constructors/constructors";
 
 export type ConstructorStanding = {
   id: string;
