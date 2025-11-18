@@ -1,9 +1,10 @@
 import { ArrowLeft, LayoutGrid } from "lucide-react";
 import { motion } from "framer-motion";
 import BottomNav from "@/components/BottomNav/BottomNav";
-import { useRaces } from "@/hooks/Circuits/useRace";
+import { useRaces } from "@/hooks/Circuits/useRaces";
 import { countryToCode } from "@/utils/countryToCode";
 import { circuitMap } from "@/utils/circuitMap";
+import { Link } from "react-router-dom";
 
 export default function Circuits() {
   const { races, loading } = useRaces();
@@ -34,51 +35,37 @@ export default function Circuits() {
         initial={{ opacity: 0, y: 25 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        {races.map((race, index) => {
-          const country = race.Circuit.Location.country;
-          const iso = (countryToCode[country] || "un").toLowerCase();
+        {races.map((race) => {
+          const iso = (countryToCode[race.Circuit.Location.country] ?? "un").toLowerCase();
           const circuitName = race.Circuit.circuitName;
-
           const trackImg = circuitMap[circuitName];
 
-          const dateFormatted = new Date(race.date).toLocaleDateString("en-US", {
-            month: "short",
-            day: "2-digit",
-          });
-
           return (
-            <motion.div
-              key={index}
-              whileTap={{ scale: 0.97 }}
-              className="bg-metallic rounded-2xl p-3 flex flex-col justify-between shadow-[0_0_15px_rgba(0,0,0,0.3)]"
-            >
-              {/* Flag + Date */}
-              <div className="flex justify-between items-center mb-2">
-                <span className={`fi fi-${iso} w-6 h-4 rounded-sm`}></span>
+            <Link key={race.round} to={`/circuits/${race.round}`}>
+              <motion.div
+                whileTap={{ scale: 0.97 }}
+                className="bg-metallic rounded-2xl p-3 flex flex-col justify-between shadow-[0_0_15px_rgba(0,0,0,0.3)]"
+              >
+                <div className="flex justify-between items-center mb-2">
+                  <span className={`fi fi-${iso} w-6 h-4 rounded-sm`} />
+                  <span className="text-xs text-gray-400 font-f1-wide">
+                    {new Date(race.date).toLocaleDateString("en-US", { month: "short", day: "2-digit" })}
+                  </span>
+                </div>
 
-                <span className="text-xs text-gray-400 font-f1-wide">
-                  {dateFormatted}
-                </span>
-              </div>
+                <div className="w-full h-20 flex items-center justify-center mb-3">
+                  {trackImg ? (
+                    <img src={trackImg} className="w-full h-full object-contain opacity-90" />
+                  ) : (
+                    <span className="text-gray-600 text-sm">No Image</span>
+                  )}
+                </div>
 
-              {/* SVG directly over the card */}
-              <div className="w-full h-20 flex items-center justify-center mb-3">
-                {trackImg ? (
-                  <img
-                    src={trackImg}
-                    alt={circuitName}
-                    className="w-full h-full object-contain opacity-90"
-                  />
-                ) : (
-                  <span className="text-gray-600 text-sm">No Image</span>
-                )}
-              </div>
-
-              {/* Circuit Name */}
-              <p className="text-center font-f1-bold text-sm leading-tight">
-                {circuitName}
-              </p>
-            </motion.div>
+                <p className="text-center font-f1-bold text-sm leading-tight">
+                  {circuitName}
+                </p>
+              </motion.div>
+            </Link>
           );
         })}
       </motion.div>

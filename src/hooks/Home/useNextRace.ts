@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useRaces } from "../Circuits/useRace";
+import { useRaces } from "../Circuits/useRaces";
 import { countryToCode } from "@/utils/countryToCode";
 
 type RaceCardData = {

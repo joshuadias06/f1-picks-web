@@ -26,7 +26,7 @@ function App() {
           <Route path="/teams" element={<Teams />} />
           <Route path="/teams/:id" element={<ConstructorDetails />} />
           <Route path="/calendar" element={<Calendar />} />
-          <Route path="/race/:id" element={<RaceDetails />} />
+          <Route path="/circuits/:id" element={<RaceDetails />} />
           <Route path="/profile" element={<Profile />} />
         </Routes>
       </div>
