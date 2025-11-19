@@ -93,7 +93,7 @@ export default function RaceDetails() {
         {/* FP1 */}
         {race.FirstPractice?.date && (
           <SessionCard
-            label="FP1"
+            label="Treino Livre 1"
             date={race.FirstPractice.date}
             time={race.FirstPractice.time}
             color="#111"
@@ -103,7 +103,7 @@ export default function RaceDetails() {
         {/* FP2 */}
         {race.SecondPractice?.date && (
           <SessionCard
-            label="FP2"
+            label="Treino Livre 2"
             date={race.SecondPractice.date}
             time={race.SecondPractice.time}
             color="#111"
@@ -113,7 +113,7 @@ export default function RaceDetails() {
         {/* FP3 */}
         {race.ThirdPractice?.date && (
           <SessionCard
-            label="FP3"
+            label="Treino Livre 3"
             date={race.ThirdPractice.date}
             time={race.ThirdPractice.time}
             color="#111"
@@ -151,8 +151,6 @@ export default function RaceDetails() {
         )}
 
       </div>
-
-
       <BottomNav />
     </div>
   );

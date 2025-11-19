@@ -31,7 +31,8 @@ export default function Circuits() {
 
       {/* Grid */}
       <motion.div
-        className="grid grid-cols-2 gap-4 px-4"
+        className="grid grid-cols-2 gap-4 px-4 items-stretch" 
+        // items-stretch => todos os cartões ficam do tamanho do maior
         initial={{ opacity: 0, y: 25 }}
         animate={{ opacity: 1, y: 0 }}
       >
@@ -41,21 +42,28 @@ export default function Circuits() {
           const trackImg = circuitMap[circuitName];
 
           return (
-            <Link key={race.round} to={`/circuits/${race.round}`}>
+            <Link key={race.round} to={`/circuits/${race.round}`} className="h-full">
               <motion.div
                 whileTap={{ scale: 0.97 }}
-                className="bg-metallic rounded-2xl p-3 flex flex-col justify-between shadow-[0_0_15px_rgba(0,0,0,0.3)]"
+                className="bg-metallic rounded-2xl p-3 flex flex-col justify-between shadow-[0_0_15px_rgba(0,0,0,0.3)] h-full"
+                // h-full => cada card ocupa toda a altura da linha do grid
               >
                 <div className="flex justify-between items-center mb-2">
                   <span className={`fi fi-${iso} w-6 h-4 rounded-sm`} />
                   <span className="text-xs text-gray-400 font-f1-wide">
-                    {new Date(race.date).toLocaleDateString("en-US", { month: "short", day: "2-digit" })}
+                    {new Date(race.date).toLocaleDateString("en-US", {
+                      month: "short",
+                      day: "2-digit",
+                    })}
                   </span>
                 </div>
 
                 <div className="w-full h-20 flex items-center justify-center mb-3">
                   {trackImg ? (
-                    <img src={trackImg} className="w-full h-full object-contain opacity-90" />
+                    <img
+                      src={trackImg}
+                      className="w-full h-full object-contain opacity-90"
+                    />
                   ) : (
                     <span className="text-gray-600 text-sm">No Image</span>
                   )}
