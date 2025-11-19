@@ -11,7 +11,7 @@ import type {
   Constructor,
   QualifyingSlots,
   GPSlots,
-} from "./types";
+} from "@/types/picks";
 
 import picksData from "@/mocks/picksData.json";
 
@@ -44,13 +44,11 @@ export default function Picks() {
   const [showGP, setShowGP] = useState(false);
   const [showConstructor, setShowConstructor] = useState(false);
 
-  // Load mock data
   useEffect(() => {
     setDrivers(picksData.drivers);
     setConstructors(picksData.constructors);
   }, []);
 
-  // 🔥 BLOCK RULE: Prevent same driver in more than one slot
   const filterDriversForSlot = (
     list: Driver[],
     selected: Record<string, string | null>,

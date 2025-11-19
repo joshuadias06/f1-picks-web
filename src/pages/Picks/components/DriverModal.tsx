@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
-import type { Driver, Constructor } from "../types";
+import type { Driver, Constructor } from "@/types/picks";
 
 type Props = {
   open: boolean;

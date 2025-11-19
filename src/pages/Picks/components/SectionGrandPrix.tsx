@@ -1,6 +1,6 @@
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import type { GPSlots } from "../types";
+import type { GPSlots } from "@/types/picks";
 
 type Props = {
   open: boolean;

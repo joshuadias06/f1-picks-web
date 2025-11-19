@@ -1,6 +1,6 @@
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import type { QualifyingSlots } from "../types";
+import type { QualifyingSlots } from "@/types/picks";
 
 type Props = {
   open: boolean;
