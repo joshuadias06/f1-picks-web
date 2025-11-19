@@ -11,6 +11,7 @@ import DriverDetails from "./pages/DriversDetails/DriverDetails";
 import RaceDetails from "./pages/RaceDetails/RaceDetails";
 import ConstructorDetails from "./pages/ConstructorDetails/ConstructorDetails";
 import Profile from "./pages/Profile/Profile";
+import PicksRaces from "./pages/PicksRaces/PicksRaces";
 
 function App() {
   return (
@@ -18,7 +19,8 @@ function App() {
       <div className="min-h-screen bg-dark text-ice">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/picks" element={<Picks />} />
+          <Route path="/picks/:id" element={<Picks />} />
+          <Route path="/picks" element={<PicksRaces />} />
           <Route path="/leaderboard" element={<Leaderboard />} />
           <Route path="/circuits" element={<Circuits />} />
           <Route path="/drivers" element={<Drivers />} />

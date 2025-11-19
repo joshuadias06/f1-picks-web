@@ -1,22 +1,18 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
-import type { Driver, Constructor } from "@/types/picks";
+import type { Driver } from "@/types/picks";
 
 type Props = {
   open: boolean;
   onClose: () => void;
-  type: "QUALI" | "GP" | "CONSTRUCTOR" | null;
   drivers: Driver[];
-  constructors: Constructor[];
-  onSelect: (item: Driver | Constructor) => void;
+  onSelect: (item: Driver) => void;
 };
 
 export default function DriverModal({
   open,
   onClose,
-  type,
   drivers,
-  constructors,
   onSelect,
 }: Props) {
   return (
@@ -36,35 +32,31 @@ export default function DriverModal({
           >
             {/* Header */}
             <div className="flex justify-between items-center mb-4">
-              <h2 className="font-f1-bold text-lg">
-                {type === "CONSTRUCTOR" ? "Select Constructor" : "Select Driver"}
-              </h2>
-              <X className="text-ice w-6 h-6 cursor-pointer" onClick={onClose} />
+              <h2 className="font-f1-bold text-lg">Select Driver</h2>
+
+              <X
+                className="text-ice w-6 h-6 cursor-pointer"
+                onClick={onClose}
+              />
             </div>
 
-            {/* List */}
+            {/* Driver List */}
             <div className="flex flex-col gap-3">
-              {type === "CONSTRUCTOR"
-                ? constructors.map((c) => (
-                    <div
-                      key={c.name}
-                      onClick={() => onSelect(c)}
-                      className="flex items-center gap-3 bg-black/20 p-3 rounded-xl border border-gray-600 cursor-pointer"
-                    >
-                      <img src={c.logo} className="w-10 h-10 rounded" />
-                      <p>{c.name}</p>
-                    </div>
-                  ))
-                : drivers.map((d) => (
-                    <div
-                      key={d.name}
-                      onClick={() => onSelect(d)}
-                      className="flex items-center gap-3 bg-black/20 p-3 rounded-xl border border-gray-600 cursor-pointer"
-                    >
-                      <img src={d.avatar} className="w-10 h-10 rounded-full" />
-                      <p>{d.name}</p>
-                    </div>
-                  ))}
+              {drivers.map((d) => (
+                <div
+                  key={d.name}
+                  onClick={() => onSelect(d)}
+                  className="flex items-center gap-3 bg-black/20 p-3 rounded-xl border border-gray-600 cursor-pointer"
+                >
+                  <img src={d.avatar} className="w-10 h-10 rounded-full" />
+                  <div className="flex flex-col">
+                    <p className="font-f1-bold">{d.name}</p>
+                    <span className="text-sm text-gray-400">
+                      ODD {d.odd}
+                    </span>
+                  </div>
+                </div>
+              ))}
             </div>
           </motion.div>
         </motion.div>

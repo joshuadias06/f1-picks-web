@@ -1,12 +1,7 @@
 export type Driver = {
   name: string;
-  odd: string;
+  odd: number;
   avatar: string;
-};
-
-export type Constructor = {
-  name: string;
-  logo: string;
 };
 
 export type QualifyingSlots = {
@@ -19,4 +14,10 @@ export type GPSlots = {
   GP1: string | null;
   GP2: string | null;
   GP3: string | null;
+};
+
+export type SprintSlots = {
+  S1: string | null;
+  S2: string | null;
+  S3: string | null;
 };

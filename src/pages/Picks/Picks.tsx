@@ -1,27 +1,43 @@
-import { useEffect, useState } from "react";
+import { useState, useMemo } from "react";
 import { ArrowLeft, BarChart3 } from "lucide-react";
+import { useParams, useNavigate } from "react-router-dom";
+import { useRace } from "@/hooks/Circuits/useRace";
+import { useDrivers } from "@/hooks/Drivers/useDrivers";
+
 import SectionQualifying from "./components/SectionQualifying";
 import SectionGrandPrix from "./components/SectionGrandPrix";
-import SectionConstructor from "./components/SectionConstructor";
+import SectionSprintRace from "./components/SectionSprintRace";
 import DriverModal from "./components/DriverModal";
 import BottomNav from "@/components/BottomNav/BottomNav";
 
 import type {
   Driver,
-  Constructor,
   QualifyingSlots,
   GPSlots,
 } from "@/types/picks";
 
-import picksData from "@/mocks/picksData.json";
-
 export default function Picks() {
-  const [drivers, setDrivers] = useState<Driver[]>([]);
-  const [constructors, setConstructors] = useState<Constructor[]>([]);
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const { race, loading } = useRace(id);
+
+  // 🔥 Aqui usamos o hook real de drivers
+  const { drivers: driverStandings, loading: loadingDrivers } = useDrivers();
+
+  // Convertendo para o tipo usado no sistema de picks
+  const mappedDrivers: Driver[] = useMemo(
+    () =>
+      driverStandings.map((d) => ({
+        name: d.name,
+        odd: 0,
+        avatar: d.image ?? "/drivers/default.png",
+      })),
+    [driverStandings]
+  );
 
   const [modalOpen, setModalOpen] = useState(false);
   const [currentType, setCurrentType] =
-    useState<"QUALI" | "GP" | "CONSTRUCTOR" | null>(null);
+    useState<"QUALI" | "GP" | "SPRINT" | null>(null);
   const [currentSlot, setCurrentSlot] = useState<string | null>(null);
 
   const [selectedQuali, setSelectedQuali] = useState<QualifyingSlots>({
@@ -36,33 +52,37 @@ export default function Picks() {
     GP3: null,
   });
 
-  const [selectedConstructor, setSelectedConstructor] = useState<string | null>(
-    null
-  );
+  const [selectedSprint, setSelectedSprint] = useState({
+    S1: null,
+    S2: null,
+    S3: null,
+  });
 
   const [showQuali, setShowQuali] = useState(true);
   const [showGP, setShowGP] = useState(false);
-  const [showConstructor, setShowConstructor] = useState(false);
+  const [showSprint, setShowSprint] = useState(false);
 
-  useEffect(() => {
-    setDrivers(picksData.drivers);
-    setConstructors(picksData.constructors);
-  }, []);
+  if (loading || loadingDrivers || !race) {
+    return (
+      <div className="min-h-screen bg-dark text-ice flex justify-center items-center font-f1-bold">
+        Loading picks...
+      </div>
+    );
+  }
+
+  const hasSprint = !!race.Sprint;
 
   const filterDriversForSlot = (
     list: Driver[],
     selected: Record<string, string | null>,
     slot: string | null
   ) => {
-    const blocked = Object.entries(selected)
-      .filter(([s, val]) => s !== slot && val)
-      .map(([_, val]) => val);
-
-    return list.filter((d) => !blocked.includes(d.name));
+    const blocked = Object.values(selected).filter((v) => v !== null);
+    return list.filter((d) => !blocked.includes(d.name) || selected[slot!] === d.name);
   };
 
   const openModal = (
-    type: "QUALI" | "GP" | "CONSTRUCTOR",
+    type: "QUALI" | "GP" | "SPRINT",
     slot?: string
   ) => {
     setCurrentType(type);
@@ -70,25 +90,19 @@ export default function Picks() {
     setModalOpen(true);
   };
 
-  const onSelect = (item: Driver | Constructor) => {
-    if (!currentType) return;
+  const onSelect = (item: Driver) => {
+    if (!currentType || !currentSlot) return;
 
-    if (currentType === "QUALI" && currentSlot) {
-      setSelectedQuali((prev) => ({
-        ...prev,
-        [currentSlot]: item.name,
-      }));
+    if (currentType === "QUALI") {
+      setSelectedQuali((prev) => ({ ...prev, [currentSlot]: item.name }));
     }
 
-    if (currentType === "GP" && currentSlot) {
-      setSelectedGP((prev) => ({
-        ...prev,
-        [currentSlot]: item.name,
-      }));
+    if (currentType === "GP") {
+      setSelectedGP((prev) => ({ ...prev, [currentSlot]: item.name }));
     }
 
-    if (currentType === "CONSTRUCTOR") {
-      setSelectedConstructor((item as Constructor).name);
+    if (currentType === "SPRINT") {
+      setSelectedSprint((prev) => ({ ...prev, [currentSlot]: item.name }));
     }
 
     setModalOpen(false);
@@ -96,18 +110,35 @@ export default function Picks() {
 
   return (
     <div className="min-h-screen bg-dark text-ice p-4 pb-24 font-f1-regular">
+
+      {/* HEADER */}
       <header className="flex justify-between items-center mb-6">
         <div className="flex items-center gap-2">
-          <ArrowLeft className="text-ice w-6 h-6" />
+          <ArrowLeft
+            className="text-ice w-6 h-6 cursor-pointer"
+            onClick={() => navigate(-1)}
+          />
           <div>
-            <h1 className="font-f1-bold text-lg">{picksData.race.title}</h1>
-            <p className="text-sm text-gray-400">{picksData.race.grandPrix}</p>
+            <h1 className="font-f1-bold text-lg">{race.raceName}</h1>
+            <p className="text-sm text-gray-400">
+              {race.Circuit.circuitName}
+            </p>
           </div>
         </div>
         <BarChart3 className="text-ice w-6 h-6" />
       </header>
 
-      {/* QUALIFYING */}
+      {/* SPRINT RACE (se existir) */}
+      {hasSprint && (
+        <SectionSprintRace
+          open={showSprint}
+          toggle={() => setShowSprint(!showSprint)}
+          selected={selectedSprint}
+          onOpenModal={(slot) => openModal("SPRINT", slot)}
+        />
+      )}
+
+      {/* QUALIFYING NORMAL */}
       <SectionQualifying
         open={showQuali}
         toggle={() => setShowQuali(!showQuali)}
@@ -123,27 +154,17 @@ export default function Picks() {
         onOpenModal={(slot) => openModal("GP", slot)}
       />
 
-      {/* CONSTRUCTOR */}
-      <SectionConstructor
-        open={showConstructor}
-        toggle={() => setShowConstructor(!showConstructor)}
-        selected={selectedConstructor}
-        onOpenModal={() => openModal("CONSTRUCTOR")}
-      />
-
       {/* MODAL */}
       <DriverModal
         open={modalOpen}
         onClose={() => setModalOpen(false)}
-        type={currentType}
         drivers={
           currentType === "QUALI"
-            ? filterDriversForSlot(drivers, selectedQuali, currentSlot)
+            ? filterDriversForSlot(mappedDrivers, selectedQuali, currentSlot)
             : currentType === "GP"
-              ? filterDriversForSlot(drivers, selectedGP, currentSlot)
-              : drivers
+            ? filterDriversForSlot(mappedDrivers, selectedGP, currentSlot)
+            : filterDriversForSlot(mappedDrivers, selectedSprint, currentSlot)
         }
-        constructors={constructors}
         onSelect={onSelect}
       />
 
