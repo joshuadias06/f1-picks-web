@@ -14,6 +14,7 @@ import type {
   Driver,
   QualifyingSlots,
   GPSlots,
+  SprintSlots,
 } from "@/types/picks";
 
 export default function Picks() {
@@ -23,6 +24,7 @@ export default function Picks() {
 
   const { drivers: driverStandings, loading: loadingDrivers } = useDrivers();
 
+  // Drivers formatados
   const mappedDrivers: Driver[] = useMemo(
     () =>
       driverStandings.map((d) => ({
@@ -34,11 +36,15 @@ export default function Picks() {
     [driverStandings]
   );
 
+  // modal
   const [modalOpen, setModalOpen] = useState(false);
   const [currentType, setCurrentType] =
     useState<"QUALI" | "GP" | "SPRINT" | null>(null);
+
+  // ❗ agora o slot é sempre string ou null
   const [currentSlot, setCurrentSlot] = useState<string | null>(null);
 
+  // selections
   const [selectedQuali, setSelectedQuali] = useState<QualifyingSlots>({
     P1: null,
     P2: null,
@@ -51,7 +57,7 @@ export default function Picks() {
     GP3: null,
   });
 
-  const [selectedSprint, setSelectedSprint] = useState({
+  const [selectedSprint, setSelectedSprint] = useState<SprintSlots>({
     S1: null,
     S2: null,
     S3: null,
@@ -71,13 +77,22 @@ export default function Picks() {
 
   const hasSprint = !!race.Sprint;
 
+  // --- CORREÇÃO CRÍTICA ---
+  // Agora o selected usa Driver | null, então bloqueamos pelo nome
   const filterDriversForSlot = (
     list: Driver[],
-    selected: Record<string, string | null>,
+    selected: Record<string, Driver | null>,
     slot: string | null
   ) => {
-    const blocked = Object.values(selected).filter((v) => v !== null);
-    return list.filter((d) => !blocked.includes(d.name) || selected[slot!] === d.name);
+    const blockedNames = Object.values(selected)
+      .filter((v): v is Driver => v !== null)
+      .map((v) => v.name);
+
+    return list.filter(
+      (d) =>
+        !blockedNames.includes(d.name) ||
+        (slot !== null && selected[slot]?.name === d.name)
+    );
   };
 
   const openModal = (
@@ -85,23 +100,23 @@ export default function Picks() {
     slot?: string
   ) => {
     setCurrentType(type);
-    setCurrentSlot(slot || null);
+    setCurrentSlot(slot ?? null);
     setModalOpen(true);
   };
 
-  const onSelect = (item: Driver) => {
+  const onSelect = (driver: Driver) => {
     if (!currentType || !currentSlot) return;
 
     if (currentType === "QUALI") {
-      setSelectedQuali((prev) => ({ ...prev, [currentSlot]: item.name }));
+      setSelectedQuali((prev) => ({ ...prev, [currentSlot]: driver }));
     }
 
     if (currentType === "GP") {
-      setSelectedGP((prev) => ({ ...prev, [currentSlot]: item.name }));
+      setSelectedGP((prev) => ({ ...prev, [currentSlot]: driver }));
     }
 
     if (currentType === "SPRINT") {
-      setSelectedSprint((prev) => ({ ...prev, [currentSlot]: item.name }));
+      setSelectedSprint((prev) => ({ ...prev, [currentSlot]: driver }));
     }
 
     setModalOpen(false);
@@ -109,7 +124,6 @@ export default function Picks() {
 
   return (
     <div className="min-h-screen bg-dark text-ice p-4 pb-24 font-f1-regular">
-
       {/* HEADER */}
       <header className="flex justify-between items-center mb-6">
         <div className="flex items-center gap-2">
@@ -119,15 +133,13 @@ export default function Picks() {
           />
           <div>
             <h1 className="font-f1-bold text-lg">{race.raceName}</h1>
-            <p className="text-sm text-gray-400">
-              {race.Circuit.circuitName}
-            </p>
+            <p className="text-sm text-gray-400">{race.Circuit.circuitName}</p>
           </div>
         </div>
         <BarChart3 className="text-ice w-6 h-6" />
       </header>
 
-      {/* SPRINT RACE (se existir) */}
+      {/* Sprint */}
       {hasSprint && (
         <SectionSprintRace
           open={showSprint}
@@ -137,7 +149,7 @@ export default function Picks() {
         />
       )}
 
-      {/* QUALIFYING NORMAL */}
+      {/* Qualifying */}
       <SectionQualifying
         open={showQuali}
         toggle={() => setShowQuali(!showQuali)}
@@ -145,7 +157,7 @@ export default function Picks() {
         onOpenModal={(slot) => openModal("QUALI", slot)}
       />
 
-      {/* GRAND PRIX */}
+      {/* GP */}
       <SectionGrandPrix
         open={showGP}
         toggle={() => setShowGP(!showGP)}
@@ -167,9 +179,7 @@ export default function Picks() {
         onSelect={onSelect}
       />
 
-      <button
-        className="fixed bottom-20 left-4 right-4 py-4 rounded-xl bg-primary text-ice font-f1-bold text-lg z-50"
-      >
+      <button className="fixed bottom-20 left-4 right-4 py-4 rounded-xl bg-primary text-ice font-f1-bold text-lg z-50">
         CONFIRM PICKS
       </button>
 

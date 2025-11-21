@@ -6,19 +6,19 @@ export type Driver = {
 };
 
 export type QualifyingSlots = {
-  P1: string | null;
-  P2: string | null;
-  P3: string | null;
+  P1: Driver | null;
+  P2: Driver | null;
+  P3: Driver | null;
 };
 
 export type GPSlots = {
-  GP1: string | null;
-  GP2: string | null;
-  GP3: string | null;
+  GP1: Driver | null;
+  GP2: Driver | null;
+  GP3: Driver | null;
 };
 
 export type SprintSlots = {
-  S1: string | null;
-  S2: string | null;
-  S3: string | null;
+  S1: Driver | null;
+  S2: Driver | null;
+  S3: Driver | null;
 };
