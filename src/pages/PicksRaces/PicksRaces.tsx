@@ -39,8 +39,8 @@ export default function PicksRaces() {
                             key={t.id}
                             onClick={() => setTab(t.id as any)}
                             className={`px-4 py-2 rounded-full text-sm font-f1-bold transition ${active
-                                    ? "bg-metallic/90 text-ice shadow-[0_4px_20px_rgba(0,0,0,0.6)]"
-                                    : "bg-metallic/60 text-gray-400"
+                                ? "bg-metallic/90 text-ice shadow-[0_4px_20px_rgba(0,0,0,0.6)]"
+                                : "bg-metallic/60 text-gray-400"
                                 }`}
                         >
                             {t.label}
@@ -75,10 +75,10 @@ export default function PicksRaces() {
 
                                     <span
                                         className={`text-xs px-3 py-1 rounded-full font-f1-bold ${race.status === "upcoming"
-                                                ? "bg-blue/5 text-blue border border-blue"
-                                                : race.status === "live"
-                                                    ? "bg-red-600 text-ice"
-                                                    : "bg-gray-700 text-gray-300"
+                                            ? "bg-blue/5 text-blue border border-blue"
+                                            : race.status === "live"
+                                                ? "bg-red-600 text-ice"
+                                                : "bg-gray-700 text-gray-300"
                                             }`}
                                     >
                                         {race.status.toUpperCase()}
@@ -95,12 +95,16 @@ export default function PicksRaces() {
                                         <span>{race.circuit}</span>
                                     </div>
 
-                                    <div className="flex items-center gap-3">
-                                        <span className="inline-block w-5 text-center">⏱️</span>
-                                        <span>
-                                            Quali: {race.quali} | Race: {race.race}
-                                        </span>
+                                    <div className="flex flex-col items-start gap-1">
+                                        <div className="flex items-center gap-2">
+                                            <span>Qualifying: {race.quali}</span>
+                                        </div>
+
+                                        <div className="flex items-center gap-2">
+                                            <span>Race: {race.race}</span>
+                                        </div>
                                     </div>
+
                                 </div>
 
                                 <div className="mt-4">
