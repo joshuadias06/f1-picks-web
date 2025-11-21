@@ -71,12 +71,12 @@ export default function Drivers() {
         selectedTeam={selectedTeam}
         setSelectedTeam={(v) => {
           setSelectedTeam(v);
-          setOpenFilters(false); // auto-close
+          setOpenFilters(false);
         }}
         sortOrder={sortOrder}
         setSortOrder={(v) => {
           setSortOrder(v);
-          setOpenFilters(false); // auto-close
+          setOpenFilters(false);
         }}
       />
 

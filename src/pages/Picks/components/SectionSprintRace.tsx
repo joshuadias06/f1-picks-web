@@ -1,40 +1,73 @@
 import { ChevronDown, ChevronUp } from "lucide-react";
-import type { SprintSlots } from "@/types/picks";
+import { motion, AnimatePresence } from "framer-motion";
+
+type SprintSlots = {
+  S1: string | null;
+  S2: string | null;
+  S3: string | null;
+};
 
 type Props = {
   open: boolean;
   toggle: () => void;
   selected: SprintSlots;
-  onOpenModal: (slot: keyof SprintSlots) => void;
+  onOpenModal: (slot: string) => void;
 };
 
-export default function SectionSprintRace({ open, toggle, selected, onOpenModal }: Props) {
+export default function SectionSprintRace({
+  open,
+  toggle,
+  selected,
+  onOpenModal,
+}: Props) {
   return (
-    <div className="bg-metallic rounded-2xl p-4 mb-4">
-      <button
-        className="w-full flex justify-between items-center"
+    <section className="bg-metallic rounded-2xl p-4 mb-4">
+      {/* Header */}
+      <div
+        className="flex justify-between items-center cursor-pointer"
         onClick={toggle}
       >
-        <h2 className="font-f1-bold text-lg">Sprint Race</h2>
+        <h2 className="font-f1-bold text-lg">TOP 3 SPRINT RACE</h2>
         {open ? <ChevronUp /> : <ChevronDown />}
-      </button>
+      </div>
 
-      {open && (
-        <div className="mt-4 flex flex-col gap-3">
-          {(["S1", "S2", "S3"] as (keyof SprintSlots)[]).map((slot) => (
-            <button
-              key={slot}
-              className="bg-dark p-3 rounded-xl flex justify-between"
-              onClick={() => onOpenModal(slot)}
-            >
-              <span className="text-gray-300">{slot}</span>
-              <span className="text-ice font-f1-bold">
-                {selected[slot] ?? "Select Driver"}
-              </span>
-            </button>
-          ))}
-        </div>
-      )}
-    </div>
+      {/* Body */}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="overflow-hidden mt-4"
+          >
+            <p className="text-gray-400 text-sm mb-4">
+              Select S1, S2 and S3 for the Sprint Race.
+            </p>
+
+            <div className="flex justify-between mb-4">
+              {(["S1", "S2", "S3"] as const).map((slot) => (
+                <div
+                  key={slot}
+                  onClick={() => onOpenModal(slot)}
+                  className="w-[30%] h-32 border border-gray-600 rounded-xl flex flex-col 
+                             items-center justify-center cursor-pointer hover:bg-gray-600/20"
+                >
+                  {selected[slot] ? (
+                    <p className="font-f1-wide text-sm">{selected[slot]}</p>
+                  ) : (
+                    <>
+                      <div className="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center">
+                        <span className="text-primary text-3xl">+</span>
+                      </div>
+                      <p className="text-sm text-gray-400 mt-2">{slot}</p>
+                    </>
+                  )}
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </section>
   );
 }

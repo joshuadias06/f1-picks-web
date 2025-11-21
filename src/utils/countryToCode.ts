@@ -1,5 +1,6 @@
 export const countryToCode: Record<string, string> = {
     "Australia": "au",
+    "Austrian": "at",
     "China": "cn",
     "Japan": "jp",
     "Bahrain": "bh",

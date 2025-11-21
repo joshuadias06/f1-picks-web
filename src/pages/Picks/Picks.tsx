@@ -21,16 +21,15 @@ export default function Picks() {
   const navigate = useNavigate();
   const { race, loading } = useRace(id);
 
-  // 🔥 Aqui usamos o hook real de drivers
   const { drivers: driverStandings, loading: loadingDrivers } = useDrivers();
 
-  // Convertendo para o tipo usado no sistema de picks
   const mappedDrivers: Driver[] = useMemo(
     () =>
       driverStandings.map((d) => ({
         name: d.name,
         odd: 0,
         avatar: d.image ?? "/drivers/default.png",
+        team: d.team,
       })),
     [driverStandings]
   );

@@ -2,6 +2,7 @@ export type Driver = {
   name: string;
   odd: number;
   avatar: string;
+  team: string;
 };
 
 export type QualifyingSlots = {
