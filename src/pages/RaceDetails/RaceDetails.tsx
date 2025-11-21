@@ -33,7 +33,7 @@ export default function RaceDetails() {
   const trackImg = circuitMap[circuitName];
 
   return (
-    <div className="min-h-screen bg-dark text-ice font-f1-regular flex flex-col items-center p-4 pb-24">
+    <div className="min-h-screen bg-dark text-ice font-f1-regular flex flex-col items-center p-4 pb-28">
 
       {/* Header */}
       <header className="w-full flex justify-between items-center mb-6">
@@ -87,10 +87,9 @@ export default function RaceDetails() {
         />
       </div>
 
-      {/* Practice + Qualifying + Sprint Sessions */}
+      {/* Sessions */}
       <div className="grid grid-cols-2 gap-3 w-full mt-3">
 
-        {/* FP1 */}
         {race.FirstPractice?.date && (
           <SessionCard
             label="Treino Livre 1"
@@ -100,7 +99,6 @@ export default function RaceDetails() {
           />
         )}
 
-        {/* FP2 */}
         {race.SecondPractice?.date && (
           <SessionCard
             label="Treino Livre 2"
@@ -110,7 +108,6 @@ export default function RaceDetails() {
           />
         )}
 
-        {/* FP3 */}
         {race.ThirdPractice?.date && (
           <SessionCard
             label="Treino Livre 3"
@@ -120,7 +117,6 @@ export default function RaceDetails() {
           />
         )}
 
-        {/* Sprint Qualifying */}
         {race.SprintQualifying?.date && (
           <SessionCard
             label="Sprint Qualifying"
@@ -130,7 +126,6 @@ export default function RaceDetails() {
           />
         )}
 
-        {/* Sprint */}
         {race.Sprint?.date && (
           <SessionCard
             label="Sprint"
@@ -140,7 +135,6 @@ export default function RaceDetails() {
           />
         )}
 
-        {/* Qualifying — aparece em AMBOS os formatos (com ou sem Sprint) */}
         {race.Qualifying?.date && (
           <SessionCard
             label="Qualifying"
@@ -149,9 +143,25 @@ export default function RaceDetails() {
             color="#111"
           />
         )}
-
       </div>
+
+      <motion.button
+        whileTap={{ scale: 0.97 }}
+        onClick={() => navigate(`/picks/${id}`)}
+        className="
+    w-full py-4 mt-6
+    rounded-xl bg-primary text-ice 
+    font-f1-bold text-lg 
+    shadow-[0_0_20px_rgba(225,6,0,0.45)]
+  "
+      >
+        MAKE PICKS
+      </motion.button>
+
+      <div className="h-6" />
+
       <BottomNav />
+
     </div>
   );
 }

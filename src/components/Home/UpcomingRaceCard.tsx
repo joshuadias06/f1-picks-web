@@ -1,8 +1,10 @@
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import { circuitMap } from "@/utils/circuitMap";
 
 type Props = {
   race: {
+    id: string;
     title: string;
     dateFormatted: string;
     flagIso?: string;
@@ -12,6 +14,8 @@ type Props = {
 };
 
 export default function UpcomingRaceCard({ race, loading }: Props) {
+  const navigate = useNavigate();
+
   if (loading) {
     return (
       <motion.div
@@ -40,7 +44,6 @@ export default function UpcomingRaceCard({ race, loading }: Props) {
       initial={{ opacity: 0, y: 15 }}
       animate={{ opacity: 1, y: 0 }}
     >
-        
       <div className="absolute top-3 right-3">
         {race.flagIso ? (
           <span className={`fi fi-${race.flagIso} text-lg`} />
@@ -69,9 +72,14 @@ export default function UpcomingRaceCard({ race, loading }: Props) {
       <motion.button
         whileTap={{ scale: 0.95 }}
         className="w-full py-3 rounded-xl bg-primary text-ice font-f1-bold text-lg shadow-[0_0_20px_rgba(225,6,0,0.5)]"
+        onClick={(e) => {
+          e.stopPropagation();
+          navigate(`/picks/${race.id}`);
+        }}
       >
         MAKE PICKS
       </motion.button>
+
     </motion.div>
   );
 }
