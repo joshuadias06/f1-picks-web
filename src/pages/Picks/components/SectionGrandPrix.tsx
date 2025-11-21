@@ -1,20 +1,18 @@
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import type { GPSlots } from "@/types/picks";
+import { OverlayPattern } from "@/components/OverlayPattern/overlayPattern";
+import { cardTeamColors } from "@/utils/cardTeamColors";
+
+import type { GPSlots, Driver } from "@/types/picks";
 
 type Props = {
   open: boolean;
   toggle: () => void;
-  selected: GPSlots;
+  selected: Record<keyof GPSlots, Driver | null>;
   onOpenModal: (slot: string) => void;
 };
 
-export default function SectionGrandPrix({
-  open,
-  toggle,
-  selected,
-  onOpenModal,
-}: Props) {
+export default function SectionGrandPrix({ open, toggle, selected, onOpenModal }: Props) {
   return (
     <section className="bg-metallic rounded-2xl p-4 mb-4">
       {/* HEADER */}
@@ -34,53 +32,46 @@ export default function SectionGrandPrix({
             exit={{ opacity: 0, height: 0 }}
             className="overflow-hidden mt-4"
           >
-            <p className="text-gray-400 text-sm mb-4">
-              Select P1, P2 and P3 for the Grand Prix.
-            </p>
-
             <div className="flex justify-between mb-4">
               {(["GP1", "GP2", "GP3"] as const).map((slot) => {
                 const driver = selected[slot];
+                const color = driver
+                  ? cardTeamColors[driver.team.toLowerCase()] ?? "#222"
+                  : "#222";
 
                 return (
                   <div
                     key={slot}
                     onClick={() => onOpenModal(slot)}
                     className="
-                      w-[30%] h-32 border border-gray-600 rounded-xl 
-                      flex flex-col items-center justify-center 
-                      cursor-pointer hover:bg-gray-600/20 overflow-hidden
-                      bg-black/20 relative
+                      relative w-[30%] h-32 border border-gray-600 
+                      rounded-xl cursor-pointer overflow-hidden
+                      flex items-center justify-center hover:opacity-90 transition
                     "
+                    style={{ backgroundColor: driver ? color : "transparent" }}
                   >
                     {driver ? (
                       <>
-                        {/* Imagem do piloto (do peito pra cima) */}
-                        <div className="w-full h-[75%] overflow-hidden flex justify-center items-start">
-                          <img
-                            src={driver.avatar}
-                            alt={driver.name}
-                            className="
-                              w-full h-full 
-                              object-cover 
-                              object-top 
-                              scale-[1.15]
-                            "
-                          />
-                        </div>
+                        <OverlayPattern />
 
-                        {/* Nome */}
-                        <p className="font-f1-wide text-[11px] mt-1 text-center px-1 truncate w-full">
-                          {driver.name}
-                        </p>
+                        <img
+                          src={driver.avatar}
+                          alt={driver.name}
+                          className="
+                            absolute w-full h-full
+                            object-cover 
+                            scale-110
+                            object-[center_0.1%]
+                          "
+                        />
                       </>
                     ) : (
-                      <>
+                      <div className="flex flex-col items-center justify-center">
                         <div className="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center">
                           <span className="text-primary text-3xl">+</span>
                         </div>
                         <p className="text-sm text-gray-400 mt-2">{slot}</p>
-                      </>
+                      </div>
                     )}
                   </div>
                 );
