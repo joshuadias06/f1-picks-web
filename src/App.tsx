@@ -6,7 +6,6 @@ import Leaderboard from "./pages/Leaderboard/Leaderboard";
 import Circuits from "./pages/Circuits/Circuits";
 import Drivers from "./pages/Drivers/Drivers";
 import Teams from "./pages/Teams/Teams";
-import Calendar from "./pages/Calendar/Calendar";
 import DriverDetails from "./pages/DriversDetails/DriverDetails";
 import RaceDetails from "./pages/RaceDetails/RaceDetails";
 import ConstructorDetails from "./pages/ConstructorDetails/ConstructorDetails";
@@ -27,7 +26,6 @@ function App() {
           <Route path="/drivers/:id" element={<DriverDetails />} />
           <Route path="/teams" element={<Teams />} />
           <Route path="/teams/:id" element={<ConstructorDetails />} />
-          <Route path="/calendar" element={<Calendar />} />
           <Route path="/circuits/:id" element={<RaceDetails />} />
           <Route path="/profile" element={<Profile />} />
         </Routes>

@@ -11,7 +11,6 @@ export default function MoreMenu({ open, onClose }: Props) {
   const items = [
     { label: "Drivers", path: "/drivers" },
     { label: "Circuits", path: "/circuits" },
-    { label: "Calendar", path: "/calendar" },
     { label: "Teams", path: "/teams" },
   ];
 
