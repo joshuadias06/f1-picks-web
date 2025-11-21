@@ -1,13 +1,15 @@
-import { ArrowLeft, LayoutGrid } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { motion } from "framer-motion";
 import BottomNav from "@/components/BottomNav/BottomNav";
 import { useRaces } from "@/hooks/Circuits/useRaces";
 import { countryToCode } from "@/utils/countryToCode";
 import { circuitMap } from "@/utils/circuitMap";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 export default function Circuits() {
   const { races, loading } = useRaces();
+  const [filter, setFilter] = useState<"ALL" | "SPRINTS">("ALL");
 
   if (loading) {
     return (
@@ -17,26 +19,52 @@ export default function Circuits() {
     );
   }
 
+  // Filtragem
+  const filteredRaces =
+    filter === "ALL" ? races : races.filter((race) => race.Sprint);
+
   return (
     <div className="min-h-screen bg-dark text-ice font-f1-regular flex flex-col pb-24">
-      
       {/* Header */}
-      <header className="flex justify-between items-center p-4 mb-4">
+      <header className="flex justify-between items-center p-4 mb-3">
         <div className="flex items-center gap-3">
           <ArrowLeft className="text-ice w-6 h-6" />
           <h1 className="font-f1-bold text-lg tracking-wide">2025 Circuits</h1>
         </div>
-        <LayoutGrid className="text-ice w-6 h-6" />
       </header>
 
-      {/* Grid */}
+      {/* FILTER CHIPS */}
+      <div className="flex gap-3 px-4 mb-4">
+        <button
+          onClick={() => setFilter("ALL")}
+          className={`px-4 py-2 rounded-xl font-f1-bold text-sm transition ${
+            filter === "ALL"
+              ? "bg-primary text-ice"
+              : "bg-metallic text-gray-300 border border-gray-600"
+          }`}
+        >
+          ALL
+        </button>
+
+        <button
+          onClick={() => setFilter("SPRINTS")}
+          className={`px-4 py-2 rounded-xl font-f1-bold text-sm transition ${
+            filter === "SPRINTS"
+              ? "bg-primary text-ice"
+              : "bg-metallic text-gray-300 border border-gray-600"
+          }`}
+        >
+          SPRINTS
+        </button>
+      </div>
+
+      {/* GRID */}
       <motion.div
-        className="grid grid-cols-2 gap-4 px-4 items-stretch" 
-        // items-stretch => todos os cartões ficam do tamanho do maior
+        className="grid grid-cols-2 gap-4 px-4 items-stretch"
         initial={{ opacity: 0, y: 25 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        {races.map((race) => {
+        {filteredRaces.map((race) => {
           const iso = (countryToCode[race.Circuit.Location.country] ?? "un").toLowerCase();
           const circuitName = race.Circuit.circuitName;
           const trackImg = circuitMap[circuitName];
@@ -46,7 +74,6 @@ export default function Circuits() {
               <motion.div
                 whileTap={{ scale: 0.97 }}
                 className="bg-metallic rounded-2xl p-3 flex flex-col justify-between shadow-[0_0_15px_rgba(0,0,0,0.3)] h-full"
-                // h-full => cada card ocupa toda a altura da linha do grid
               >
                 <div className="flex justify-between items-center mb-2">
                   <span className={`fi fi-${iso} w-6 h-4 rounded-sm`} />
