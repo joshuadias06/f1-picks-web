@@ -26,28 +26,30 @@ export default function PicksRaces() {
                 <h1 className="font-f1-bold text-xl tracking-wide">Races Picks</h1>
             </header>
 
-            {/* Tabs (IDÊNTICO AO ORIGINAL) */}
-            <div className="flex gap-3 mb-6">
+            {/* FILTER CHIPS — estilo idêntico ao Circuits */}
+            <div className="flex gap-3 px-1 mb-6">
                 {[
                     { id: "all", label: "All" },
                     { id: "upcoming", label: "Upcoming" },
                     { id: "completed", label: "Completed" },
                 ].map((t) => {
-                    const active = tab === (t.id as any);
+                    const active = tab === t.id;
+
                     return (
                         <button
                             key={t.id}
                             onClick={() => setTab(t.id as any)}
-                            className={`px-4 py-2 rounded-full text-sm font-f1-bold transition ${active
-                                ? "bg-metallic/90 text-ice shadow-[0_4px_20px_rgba(0,0,0,0.6)]"
-                                : "bg-metallic/60 text-gray-400"
+                            className={`px-4 py-2 rounded-xl font-f1-bold text-sm transition ${active
+                                    ? "bg-primary text-ice"
+                                    : "bg-metallic text-gray-300 border border-gray-600"
                                 }`}
                         >
-                            {t.label}
+                            {t.label.toUpperCase()}
                         </button>
                     );
                 })}
             </div>
+
 
             {/* If loading */}
             {loading && (
